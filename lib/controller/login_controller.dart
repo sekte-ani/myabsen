@@ -14,7 +14,7 @@ class LoginController extends GetxController {
   }
 
   validatePassword(String? password) {
-    if (!GetUtils.isLengthGreaterOrEqual(password, 2)) {
+    if (!GetUtils.isLengthGreaterOrEqual(password, 3)) {
       return 'Password is not valid';
     }
     return null;

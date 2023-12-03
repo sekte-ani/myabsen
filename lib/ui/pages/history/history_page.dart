@@ -1,3 +1,4 @@
+import 'package:MyAbsen/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +15,7 @@ class HistoryPage extends StatelessWidget {
       ),
     );
     return Scaffold(
+      backgroundColor: bgColor,
       body: SafeArea(
         child: Container(
           constraints: BoxConstraints.expand(),

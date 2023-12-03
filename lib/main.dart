@@ -1,5 +1,6 @@
 import 'package:MyAbsen/controller/bindings/dashboard_binding.dart';
 import 'package:MyAbsen/theme.dart';
+import 'package:MyAbsen/ui/pages/dashboard_page.dart';
 import 'package:MyAbsen/ui/pages/login_page.dart';
 import 'package:MyAbsen/ui/pages/splash_page.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: LoginPage(),
+      home: DashboardPage(),
       initialBinding: DashboardBinding(),
     );
   }

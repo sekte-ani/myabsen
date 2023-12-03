@@ -6,8 +6,11 @@ Color green2Color = const Color(0xff459D25);
 Color subtleGreenColor = const Color(0xff82CB67);
 Color darkGreenColor = const Color(0xff031F10);
 Color redColor = const Color(0xffFB4141);
+Color yellowColor = const Color(0xffD2CD56);
+Color yellow2Color = const Color(0xffF4EE67);
 
 Color blackColor = const Color(0xff404040);
+Color black2Color = const Color(0xff4D4D4D);
 Color greyColor = const Color(0xffC7C9D9);
 Color darkGreyColor = const Color(0xffA3A3A3);
 Color lightGreyColor = const Color(0xffEDEFF9);

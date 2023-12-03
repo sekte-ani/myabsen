@@ -14,6 +14,7 @@ class DashboardPage extends StatelessWidget {
     return GetBuilder<DashboardController>(
       builder: (controller) {
         return Scaffold(
+          backgroundColor: bgColor,
           body: SafeArea(
             child: IndexedStack(
               index: controller.tabIndex,

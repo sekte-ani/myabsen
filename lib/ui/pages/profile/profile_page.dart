@@ -17,7 +17,9 @@ class ProfilePage extends GetView<ProfileController> {
       ),
     );
     return Scaffold(
+      backgroundColor: bgColor,
       appBar: AppBar(
+        backgroundColor: bgColor,
         title: Text(
           "Profile Saya",
         ),
