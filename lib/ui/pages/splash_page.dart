@@ -10,7 +10,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 2), (() {
-      Get.off(DashboardPage());
+      Get.off(LoginPage());
     }));
     return Scaffold(
       backgroundColor: whiteColor,

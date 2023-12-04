@@ -1,5 +1,6 @@
 import 'package:MyAbsen/controller/profile_controller.dart';
 import 'package:MyAbsen/theme.dart';
+import 'package:MyAbsen/ui/pages/login_page.dart';
 import 'package:MyAbsen/ui/pages/profile/profile_edit_page.dart';
 import 'package:MyAbsen/ui/pages/profile/profile_reset_page.dart';
 import 'package:MyAbsen/ui/widgets/profile_menu_item.dart';
@@ -22,6 +23,7 @@ class ProfilePage extends GetView<ProfileController> {
         backgroundColor: bgColor,
         title: Text(
           "Profile Saya",
+          style: font_bold.copyWith(fontSize: 20),
         ),
       ),
       body: ListView(
@@ -88,6 +90,9 @@ class ProfilePage extends GetView<ProfileController> {
                   iconUrl: Icons.logout,
                   title: "Log out",
                   textColor: redColor,
+                  onTap: () {
+                    Get.offAll(LoginPage());
+                  },
                 ),
               ],
             ),

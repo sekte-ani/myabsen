@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: DashboardPage(),
+      home: SplashPage(),
       initialBinding: DashboardBinding(),
     );
   }

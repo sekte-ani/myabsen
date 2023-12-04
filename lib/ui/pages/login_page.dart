@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:MyAbsen/theme.dart';
 
 class LoginPage extends GetView<LoginController> {
+  final LoginController controller = Get.find<LoginController>();
   @override
   Widget build(BuildContext context) {
     var mediaSize = MediaQuery.of(context).size;

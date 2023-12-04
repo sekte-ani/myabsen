@@ -1,3 +1,9 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-class AbsensiController extends GetxController {}
+import 'shared/dateformat_controller.dart';
+
+class AbsensiController extends GetxController {
+  final DateFormatController dateFormatController =
+      Get.put(DateFormatController());
+}

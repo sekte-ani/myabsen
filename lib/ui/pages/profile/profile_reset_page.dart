@@ -52,26 +52,23 @@ class ProfileResetPage extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    InputField(
+                    InputFieldPassword(
                       title: "Password Lama",
                       hintText: "Masukkan password lama anda..",
-                      obscureText: true,
                     ),
                     const SizedBox(
                       height: 16,
                     ),
-                    InputField(
+                    InputFieldPassword(
                       title: "Password Baru",
                       hintText: "Masukkan password baru anda..",
-                      obscureText: true,
                     ),
                     const SizedBox(
                       height: 16,
                     ),
-                    InputField(
+                    InputFieldPassword(
                       title: "Konfirmasi Password",
                       hintText: "Masukkan ulang password baru..",
-                      obscureText: true,
                     ),
                     const SizedBox(
                       height: 32,

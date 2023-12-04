@@ -247,6 +247,9 @@ class InputFieldBox extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
+  final void Function(String?)? onChange;
 
   const InputFieldBox({
     Key? key,
@@ -254,6 +257,9 @@ class InputFieldBox extends StatelessWidget {
     required this.hintText,
     this.obscureText = false,
     this.controller,
+    this.validator,
+    this.inputFormatters,
+    this.onChange,
   });
 
   @override
@@ -275,6 +281,9 @@ class InputFieldBox extends StatelessWidget {
           keyboardType: TextInputType.multiline,
           obscureText: obscureText,
           controller: controller,
+          validator: validator,
+          inputFormatters: inputFormatters,
+          onChanged: onChange,
           decoration: InputDecoration(
             filled: true,
             fillColor: whiteColor,

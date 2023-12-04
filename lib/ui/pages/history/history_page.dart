@@ -1,6 +1,8 @@
 import 'package:MyAbsen/theme.dart';
+import 'package:MyAbsen/ui/widgets/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HistoryPage extends StatelessWidget {
@@ -18,75 +20,75 @@ class HistoryPage extends StatelessWidget {
       backgroundColor: bgColor,
       body: SafeArea(
         child: Container(
-          constraints: BoxConstraints.expand(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+          ),
+          child: ListView(
+            children: [
               Column(
-                children: <Widget>[
-                  Text('w100',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 18.0, fontWeight: FontWeight.w100)),
-                  Text('w200',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 18.0, fontWeight: FontWeight.w200)),
-                  Text('w300',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 18.0, fontWeight: FontWeight.w300)),
-                  Text('w400',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 18.0, fontWeight: FontWeight.w400)),
-                  Text('w500',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 18.0, fontWeight: FontWeight.w500)),
-                  Text('w600',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 18.0, fontWeight: FontWeight.w600)),
-                  Text('w700',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 18.0, fontWeight: FontWeight.w700)),
-                  Text('w800',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 18.0, fontWeight: FontWeight.w800)),
-                  Text('w900',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 18.0, fontWeight: FontWeight.w900)),
+                children: [
+                  SizedBox(height: 20), // Memberi jarak 10 di bagian atas
+                  Text(
+                    "Riwayat Absensi",
+                    style: font_bold.copyWith(
+                      fontSize: 20,
+                    ),
+                  ),
+
+                  // Container(
+                  //   margin: EdgeInsets.symmetric(
+                  //     horizontal: 16,
+                  //   ), // Memberi margin horizontal
+                  //   decoration: BoxDecoration(
+                  //     border: Border.all(color: green2Color, width: 2.0),
+                  //     borderRadius: BorderRadius.circular(115.0),
+                  //   ),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(8.0),
+                  //     child: Center(
+                  //       child: Text(
+                  //         'Riwayat Absensi',
+                  //         style: font_bold.copyWith(
+                  //           fontSize: 24,
+                  //           fontWeight: FontWeight.bold,
+                  //           color: greenColor,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  HistoryCard(
+                    tanggal: "6 Desember 2023",
+                  ),
+                  HistoryCard(
+                    tanggal: "5 Desember 2023",
+                  ),
+                  HistoryCard(
+                    tanggal: "4 Desember 2023",
+                    status: "Cuti",
+                  ),
+                  HistoryCard(
+                    tanggal: "3 Desember 2023",
+                    status: "Cuti",
+                  ),
+                  HistoryCard(
+                    tanggal: "2 Desember 2023",
+                    status: "Cuti",
+                  ),
+                  HistoryCard(
+                    tanggal: "1 Desember 2023",
+                  ),
+                  HistoryCard(
+                    tanggal: "30 November 2023",
+                  ),
+                  HistoryCard(
+                    tanggal: "29 November 2023",
+                  ),
                 ],
               ),
-              SizedBox(
-                width: 20.0,
-              ),
-              Column(
-                children: <Widget>[
-                  Text('w100',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w100)),
-                  Text('w200',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w200)),
-                  Text('w300',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w300)),
-                  Text('w400',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w400)),
-                  Text('w500',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w500)),
-                  Text('w600',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w600)),
-                  Text('w700',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w700)),
-                  Text('w800',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w800)),
-                  Text('w900',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w900)),
-                ],
-              )
             ],
           ),
         ),

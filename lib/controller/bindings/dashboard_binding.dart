@@ -1,4 +1,5 @@
 import 'package:MyAbsen/controller/absensi_controller.dart';
+import 'package:MyAbsen/controller/cuti_controller.dart';
 import 'package:MyAbsen/controller/dashboard_controller.dart';
 import 'package:MyAbsen/controller/history_controller.dart';
 import 'package:MyAbsen/controller/login_controller.dart';
@@ -13,5 +14,6 @@ class DashboardBinding extends Bindings {
     Get.lazyPut<HistoryController>(() => HistoryController());
     Get.lazyPut<ProfileController>(() => ProfileController());
     Get.lazyPut<LoginController>(() => LoginController());
+    Get.lazyPut<CutiController>(() => CutiController());
   }
 }
