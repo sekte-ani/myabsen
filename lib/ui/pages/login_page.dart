@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:MyAbsen/theme.dart';
+import 'package:flutter/services.dart';
 
 class LoginPage extends GetView<LoginController> {
   final LoginController controller = Get.find<LoginController>();
+
+  // TextEditingController properties
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var mediaSize = MediaQuery.of(context).size;
@@ -77,8 +83,6 @@ class LoginPage extends GetView<LoginController> {
   }
 
   Widget _buildForm() {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
     return Form(
       key: controller.formKey,
       child: Column(
