@@ -1,6 +1,7 @@
 import 'package:MyAbsen/controller/login_controller.dart';
 import 'package:MyAbsen/ui/widgets/buttons.dart';
 import 'package:MyAbsen/ui/widgets/forms.dart';
+import 'package:MyAbsen/ui/widgets/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,7 +36,7 @@ class LoginPage extends GetView<LoginController> {
         body: Stack(
           children: [
             Positioned(top: 80, child: _buildTop(mediaSize)),
-            Positioned(bottom: 0, child: _buildBottom(mediaSize)),
+            Positioned(bottom: 50, child: _buildBottom(mediaSize)),
           ],
         ),
       ),
@@ -69,9 +70,8 @@ class LoginPage extends GetView<LoginController> {
       width: mediaSize.width,
       child: Card(
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
           ),
         ),
         child: Padding(
@@ -89,27 +89,33 @@ class LoginPage extends GetView<LoginController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Hola!",
+            "Selamat datang!",
             style: GoogleFonts.montserrat(
               color: green2Color, // Ensure green2Color is defined
-              fontSize: 32,
+              fontSize: 28,
               fontWeight: FontWeight.w500,
             ),
           ),
-          Text("Please login with your information"),
-          const SizedBox(height: 60),
+          Text("Silahkan login dengan credential anda"),
+          const SizedBox(height: 50),
           InputField(
             title: "Email",
             hintText: "Masukkan email anda..",
             controller: emailController,
-            validator: (email) => controller.validateEmail(email),
+            validator: Validator.email,
+            onChange: (value) {
+              controller.email = value;
+            },
           ),
           const SizedBox(height: 30),
           InputFieldPassword(
             title: "Password",
             hintText: "Masukkan password anda..",
             controller: passwordController,
-            validator: (password) => controller.validatePassword(password),
+            validator: Validator.required,
+            onChange: (value) {
+              controller.password = value;
+            },
           ),
           const SizedBox(height: 40),
           PrimaryButton(
@@ -120,7 +126,7 @@ class LoginPage extends GetView<LoginController> {
               controller.onLogin();
             },
           ),
-          const SizedBox(height: 60),
+          const SizedBox(height: 30),
         ],
       ),
     );

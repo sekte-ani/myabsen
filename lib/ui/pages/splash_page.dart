@@ -1,17 +1,15 @@
+import 'package:MyAbsen/controller/splash_controller.dart';
 import 'package:MyAbsen/theme.dart';
 import 'package:MyAbsen/ui/pages/dashboard_page.dart';
 import 'package:MyAbsen/ui/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SplashPage extends StatelessWidget {
-  const SplashPage({super.key});
+class SplashPage extends GetView<SplashController> {
+  final SplashController controller = Get.put(SplashController());
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 2), (() {
-      Get.off(LoginPage());
-    }));
     return Scaffold(
       backgroundColor: whiteColor,
       body: Center(

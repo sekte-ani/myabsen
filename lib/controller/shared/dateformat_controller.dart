@@ -24,16 +24,15 @@ class DateFormatController extends GetxController {
   }
 
   void greetings(DateTime time) {
-    var hour = DateTime.now().hour;
+    var hour = time.hour;
     if (hour < 12) {
       greet.value = "Selamat Pagi,";
-    }
-    if (hour < 15) {
+    } else if (hour < 15) {
       greet.value = "Selamat Siang,";
-    }
-    if (hour < 18) {
+    } else if (hour < 18) {
       greet.value = "Selamat Sore,";
+    } else {
+      greet.value = "Selamat Malam,";
     }
-    greet.value = "Selamat Malam,";
   }
 }
