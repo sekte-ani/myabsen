@@ -1,5 +1,6 @@
 import 'package:MyAbsen/controller/absensi_controller.dart';
 import 'package:MyAbsen/controller/dashboard_controller.dart';
+import 'package:MyAbsen/controller/profile_controller.dart';
 import 'package:MyAbsen/controller/shared/dateformat_controller.dart';
 import 'package:MyAbsen/theme.dart';
 import 'package:MyAbsen/ui/pages/absensi/absensi_keluar_page.dart';
@@ -19,6 +20,7 @@ class AbsensiPage extends GetView<AbsensiController> {
         statusBarIconBrightness: Brightness.dark,
       ),
     );
+
     return Scaffold(
       backgroundColor: bgColor,
       body: SafeArea(
@@ -80,10 +82,15 @@ class AbsensiPage extends GetView<AbsensiController> {
 }
 
 Widget buildHeader() {
+  ProfileController profileController = Get.put(ProfileController());
+
+  var profile = profileController.profile;
+
   final DateFormatController dateFormatController =
       Get.put(DateFormatController());
   DateTime currentTime = DateTime.now();
   dateFormatController.greetings(currentTime);
+
   return Container(
     margin: const EdgeInsets.only(
       top: 10,
@@ -94,17 +101,21 @@ Widget buildHeader() {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              dateFormatController.greet.value,
-              style: font_regular.copyWith(
-                fontSize: 14,
+            Obx(
+              () => Text(
+                dateFormatController.greet.value,
+                style: font_regular.copyWith(
+                  fontSize: 14,
+                ),
               ),
             ),
-            Text(
-              'Aldi Taher',
-              style: font_bold.copyWith(
-                fontSize: 18,
-                color: darkGreenColor,
+            Obx(
+              () => Text(
+                '${profile["name"]}',
+                style: font_bold.copyWith(
+                  fontSize: 18,
+                  color: darkGreenColor,
+                ),
               ),
             ),
           ],
