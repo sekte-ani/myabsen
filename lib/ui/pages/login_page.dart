@@ -1,6 +1,7 @@
 import 'package:MyAbsen/controller/login_controller.dart';
 import 'package:MyAbsen/ui/widgets/buttons.dart';
 import 'package:MyAbsen/ui/widgets/forms.dart';
+import 'package:MyAbsen/ui/widgets/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -101,14 +102,20 @@ class LoginPage extends GetView<LoginController> {
             title: "Email",
             hintText: "Masukkan email anda..",
             controller: emailController,
-            validator: (email) => controller.validateEmail(email),
+            validator: Validator.email,
+            onChange: (value) {
+              controller.email = value;
+            },
           ),
           const SizedBox(height: 30),
           InputFieldPassword(
             title: "Password",
             hintText: "Masukkan password anda..",
             controller: passwordController,
-            validator: (password) => controller.validatePassword(password),
+            validator: Validator.required,
+            onChange: (value) {
+              controller.password = value;
+            },
           ),
           const SizedBox(height: 40),
           PrimaryButton(

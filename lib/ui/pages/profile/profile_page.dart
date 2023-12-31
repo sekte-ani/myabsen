@@ -91,7 +91,7 @@ class ProfilePage extends GetView<ProfileController> {
                   title: "Log out",
                   textColor: redColor,
                   onTap: () {
-                    Get.offAll(LoginPage());
+                    controller.onLogout();
                   },
                 ),
               ],
