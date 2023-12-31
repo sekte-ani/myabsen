@@ -35,7 +35,7 @@ class LoginPage extends GetView<LoginController> {
         body: Stack(
           children: [
             Positioned(top: 80, child: _buildTop(mediaSize)),
-            Positioned(bottom: 0, child: _buildBottom(mediaSize)),
+            Positioned(bottom: 50, child: _buildBottom(mediaSize)),
           ],
         ),
       ),
@@ -69,9 +69,8 @@ class LoginPage extends GetView<LoginController> {
       width: mediaSize.width,
       child: Card(
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
           ),
         ),
         child: Padding(
@@ -89,15 +88,15 @@ class LoginPage extends GetView<LoginController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Hola!",
+            "Selamat datang!",
             style: GoogleFonts.montserrat(
               color: green2Color, // Ensure green2Color is defined
-              fontSize: 32,
+              fontSize: 28,
               fontWeight: FontWeight.w500,
             ),
           ),
-          Text("Please login with your information"),
-          const SizedBox(height: 60),
+          Text("Silahkan login dengan credential anda"),
+          const SizedBox(height: 50),
           InputField(
             title: "Email",
             hintText: "Masukkan email anda..",
@@ -120,7 +119,7 @@ class LoginPage extends GetView<LoginController> {
               controller.onLogin();
             },
           ),
-          const SizedBox(height: 60),
+          const SizedBox(height: 30),
         ],
       ),
     );
