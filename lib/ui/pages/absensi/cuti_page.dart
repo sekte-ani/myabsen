@@ -1,8 +1,10 @@
 import 'package:MyAbsen/controller/cuti_controller.dart';
+import 'package:MyAbsen/controller/shared/dateformat_controller.dart';
 import 'package:MyAbsen/controller/shared/datepicker_controller.dart';
 import 'package:MyAbsen/theme.dart';
 import 'package:MyAbsen/ui/widgets/buttons.dart';
 import 'package:MyAbsen/ui/widgets/forms.dart';
+import 'package:MyAbsen/ui/widgets/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -12,8 +14,12 @@ class CutiPage extends GetView<CutiController> {
   DatePickerController datePickerController = Get.put(DatePickerController());
   TextEditingController alasanController = Get.put(TextEditingController());
   CutiController controller = Get.put(CutiController());
+  DateFormatController dateFormatController = Get.put(DateFormatController());
+
   @override
   Widget build(BuildContext context) {
+    var dataCuti = controller.cuti;
+
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -60,11 +66,12 @@ class CutiPage extends GetView<CutiController> {
                         ),
                         Obx(
                           () => Text(
-                            DateFormat('dd MMMM yyyy', 'id_ID')
-                                .format(
-                                  datePickerController.dateRange.value.start,
-                                )
-                                .toString(),
+                            (dataCuti["tanggal_mulai"] != null)
+                                ? DateFormat('dd MMMM yyyy', 'id_ID')
+                                    .format(DateTime.parse(
+                                        dataCuti["tanggal_mulai"]))
+                                    .toString()
+                                : "null",
                             style: font_regular.copyWith(
                               color: whiteColor,
                             ),
@@ -82,11 +89,12 @@ class CutiPage extends GetView<CutiController> {
                         ),
                         Obx(
                           () => Text(
-                            DateFormat('dd MMMM yyyy', 'id_ID')
-                                .format(
-                                  datePickerController.dateRange.value.end,
-                                )
-                                .toString(),
+                            (dataCuti["tanggal_mulai"] != null)
+                                ? DateFormat('dd MMMM yyyy', 'id_ID')
+                                    .format(DateTime.parse(
+                                        dataCuti["tanggal_berakhir"]))
+                                    .toString()
+                                : "null",
                             style: font_regular.copyWith(
                               color: whiteColor,
                             ),
@@ -118,10 +126,12 @@ class CutiPage extends GetView<CutiController> {
                                 fontSize: 16,
                               ),
                             ),
-                            Text(
-                              "Ditolak",
-                              style: font_regular.copyWith(
-                                color: redColor,
+                            Obx(
+                              () => Text(
+                                "${dataCuti["status"]}",
+                                style: font_regular.copyWith(
+                                  color: redColor,
+                                ),
                               ),
                             ),
                           ],
@@ -139,7 +149,7 @@ class CutiPage extends GetView<CutiController> {
                 ),
                 Obx(
                   () => Text(
-                    controller.alasanCuti.value,
+                    "${dataCuti["alasan"]}",
                     style: font_regular.copyWith(
                       color: whiteColor,
                     ),
@@ -179,8 +189,10 @@ class CutiPage extends GetView<CutiController> {
                               title: "Alasan Cuti",
                               hintText: "Deskripsikan alasan anda cuti...",
                               controller: alasanController,
-                              validator: (alasan) =>
-                                  controller.validateAlasan(alasan),
+                              validator: Validator.required,
+                              onChange: (value) {
+                                controller.alasan = value;
+                              },
                             ),
                             const SizedBox(
                               height: 35,
@@ -200,8 +212,13 @@ class CutiPage extends GetView<CutiController> {
                                     ),
                                     color: whiteColor,
                                     splashColor: bgColor,
-                                    onPressed: () {
-                                      datePickerController.chooseDateRange();
+                                    onPressed: () async {
+                                      await datePickerController
+                                          .chooseDateRange();
+                                      // print(
+                                      //     "Start Date: ${datePickerController.startDate}");
+                                      // print(
+                                      //     "End Date: ${datePickerController.endDate}");
                                     },
                                   ),
                                 ),
@@ -212,12 +229,28 @@ class CutiPage extends GetView<CutiController> {
                                   child: Container(
                                     height: 50,
                                     child: ElevatedButton(
-                                      onPressed: () {
-                                        // Handle button press
+                                      onPressed: () async {
+                                        controller.tanggal_mulai =
+                                            DateFormat('yyyy-MM-dd').format(
+                                                datePickerController
+                                                    .startDate!);
+                                        controller.tanggal_berakhir =
+                                            DateFormat('yyyy-MM-dd').format(
+                                                datePickerController.endDate!);
+                                        // print(
+                                        //     "Start Date: ${DateFormat('yyyy-MM-dd').format(datePickerController.startDate!)}");
+                                        // print(
+                                        //     "End Date: ${DateFormat('yyyy-MM-dd').format(datePickerController.endDate!)}");
                                         print(
-                                            "Alasannye : ${alasanController}");
-                                        controller
-                                            .onSubmit(alasanController.text);
+                                            "Alasannye : ${controller.tanggal_mulai}");
+                                        print(
+                                            "Alasannye : ${controller.tanggal_berakhir}");
+                                        print(
+                                            "Alasannye : ${controller.alasan}");
+
+                                        await controller.onSubmit();
+                                        controller.getCuti();
+                                        alasanController.clear();
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: greenColor,

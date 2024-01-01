@@ -45,6 +45,10 @@ class DatePickerController extends GetxController {
     }
   }
 
+  DateTime? startDate;
+  DateTime? endDate;
+  DateTime? formattedStartDate;
+
   chooseDateRange() async {
     DateTimeRange? picked = await showDateRangePicker(
         context: Get.context!,
@@ -53,6 +57,15 @@ class DatePickerController extends GetxController {
         initialDateRange: dateRange.value);
     if (picked != null) {
       dateRange.value = picked;
+
+      // Split the DateTimeRange into two separate DateTime variables
+      this.startDate =
+          DateTime.parse(DateFormat('yyyy-MM-dd').format(picked.start));
+      this.endDate =
+          DateTime.parse(DateFormat('yyyy-MM-dd').format(picked.end));
+      // Now you can use startDate and endDate as needed
+      // print('Start Date: $startDate');
+      // print('End Date: $endDate');
     }
   }
 }
