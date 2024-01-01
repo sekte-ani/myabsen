@@ -1,6 +1,7 @@
 import 'package:MyAbsen/services/auth_service.dart';
 import 'package:MyAbsen/services/reset_service.dart';
 import 'package:MyAbsen/controller/models/Profile.dart';
+import 'package:MyAbsen/ui/pages/dashboard_page.dart';
 import 'package:flutter/material.dart'; // Pastikan impor kelas Profile ada di sini
 import 'package:MyAbsen/theme.dart';
 import 'package:MyAbsen/ui/pages/login_page.dart';
@@ -16,7 +17,6 @@ class ResetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getPassword();
   }
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -24,67 +24,49 @@ class ResetController extends GetxController {
   RxBool isUpdatingPassword = false.obs;
 
   String? password;
-  String? passwordConfirmation;
-  String? currentPassword;
+  String? password_confirmation;
+  String? current_password;
 
   RxMap reset = {}.obs;
-  Future<void> getPassword() async {
-    try {
-      reset.value = await ResetService().get();
 
-      reset = reset['password'];
-      reset = reset['password_confirmation'];
-      reset = reset['current_password'];
-
-      update();
-    } catch (e) {
-      print('Error fetching profiles: $e');
-      // Handle error as needed
+  updatePassword() async {
+    Get.focusScope!.unfocus();
+    bool isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      return;
     }
-  }
 
-  Future<void> updatePassword({
-    required String password,
-    required String password_confirmation,
-    required String current_password,
-  }) async {
-    try {
-      isUpdatingPassword.value = true;
-      await ResetService().update(
-        password: password,
-        passwordConfirmation: password_confirmation,
-        currentPassword: current_password,
-      );
+    // isUpdatingPassword.value = true;
+    String? isSuccess = await ResetService().update(
+      password: password!,
+      password_confirmation: password_confirmation!,
+      current_password: current_password!,
+    );
 
-      reset['password'] = password;
-      reset['password_confirmation'] = password_confirmation;
-      reset['current_password'] = current_password;
+    // Notify listeners (if necessary)
+    update();
 
-      // Notify listeners (if necessary)
-      update();
-
-      // Show success message or handle success as needed
-      Get.snackbar(
-        'Success',
-        'Password Update Successful',
-        snackPosition: SnackPosition.TOP,
-        colorText: whiteColor,
-        backgroundColor: green2Color,
-      );
-      await getPassword();
-    } catch (e) {
-      print('Error updating profile: $e');
-      // Handle error as needed
+    if (isSuccess != "Reset Password Success") {
       Get.snackbar(
         'Error',
-        'Password Update Failed',
+        'Check kembali password anda',
         snackPosition: SnackPosition.TOP,
         colorText: whiteColor,
         backgroundColor: redColor,
       );
-    } finally {
-      // Set isUpdatingProfile to false when the update is completed
-      isUpdatingPassword.value = false;
+      return;
+    } else {
+      Get.snackbar(
+        'Success',
+        'Password berhasil diganti',
+        snackPosition: SnackPosition.TOP,
+        colorText: whiteColor,
+        backgroundColor: green2Color,
+      );
+      Get.off(() => DashboardPage());
     }
+
+    // Set isUpdatingProfile to false when the update is completed
+    // isUpdatingPassword.value = false;
   }
 }

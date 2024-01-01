@@ -58,4 +58,16 @@ class Validator {
     }
     return null;
   }
+
+  static String? password(String? value) {
+    if (value!.isEmpty) {
+      return "Password is required";
+    }
+
+    if (value.length < 8) {
+      return "Password must be at least 8 characters long";
+    }
+
+    return null;
+  }
 }

@@ -58,63 +58,58 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             color: Colors.grey[200],
             borderRadius: const BorderRadius.vertical(top: Radius.circular(27)),
           ),
-          child: Column(
-            children: [
-              const SizedBox(height: 24),
-              InputFieldPassword(
-                title: "Password Lama",
-                hintText: "Masukkan password lama anda..",
-                controller: oldPasswordController,
-                validator: Validator.required,
-                value: controller.password,
-                onChange: (value) {
-                  controller.password = value;
-                },
-              ),
-              const SizedBox(height: 16),
-              InputFieldPassword(
-                title: "Password Baru",
-                hintText: "Masukkan password baru anda..",
-                controller: newPasswordController,
-                validator: Validator.required,
-                value: controller.passwordConfirmation,
-                onChange: (value) {
-                  controller.passwordConfirmation = value;
-                },
-              ),
-              const SizedBox(height: 16),
-              InputFieldPassword(
-                title: "Konfirmasi Password",
-                hintText: "Masukkan ulang password baru..",
-                controller: confirmPasswordController,
-                validator: Validator.required,
-                value: controller.currentPassword,
-                onChange: (value) {
-                  controller.currentPassword = value;
-                },
-              ),
-              const SizedBox(height: 32),
-              PrimaryButton(
-                title: "Perbarui Profile",
-                onPressed: controller.isUpdatingPassword.value
-                    ? null
-                    : () {
-                        // print("name : ${controller.name}");
-                        print("password: ${controller.password}");
-                        print(
-                            "password_confirmation: ${controller.passwordConfirmation}");
-                        print(
-                            "current_password: ${controller.currentPassword}");
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              children: [
+                const SizedBox(height: 24),
+                InputFieldPassword(
+                  title: "Password Lama",
+                  hintText: "Masukkan password lama anda..",
+                  controller: oldPasswordController,
+                  validator: Validator.required,
+                  onChange: (value) {
+                    controller.current_password = value;
+                  },
+                ),
+                const SizedBox(height: 16),
+                InputFieldPassword(
+                  title: "Password Baru",
+                  hintText: "Masukkan password baru anda..",
+                  controller: newPasswordController,
+                  validator: Validator.password,
+                  onChange: (value) {
+                    controller.password = value;
+                  },
+                ),
+                const SizedBox(height: 16),
+                InputFieldPassword(
+                  title: "Konfirmasi Password",
+                  hintText: "Masukkan ulang password baru..",
+                  controller: confirmPasswordController,
+                  validator: Validator.required,
+                  onChange: (value) {
+                    controller.password_confirmation = value;
+                  },
+                ),
+                const SizedBox(height: 32),
+                PrimaryButton(
+                  title: "Perbarui Profile",
+                  onPressed: controller.isUpdatingPassword.value
+                      ? null
+                      : () {
+                          // print("name : ${controller.name}");
+                          print("1password: ${controller.password}");
+                          print(
+                              "1password_confirmation: ${controller.password_confirmation}");
+                          print(
+                              "1current_password: ${controller.current_password}");
 
-                        controller.updatePassword(
-                          password: controller.password!,
-                          password_confirmation:
-                              controller.passwordConfirmation!,
-                          current_password: controller.currentPassword!,
-                        );
-                      },
-              ),
-            ],
+                          controller.updatePassword();
+                        },
+                ),
+              ],
+            ),
           ),
         ),
       ],

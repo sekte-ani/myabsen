@@ -63,30 +63,4 @@ class CutiController extends GetxController {
       return;
     }
   }
-
-  // Future<void> onSubmit(String? alasan) async {
-  //   Get.focusScope!.unfocus();
-  //   if (formKey.currentState!.validate()) {
-  //     Get.snackbar(
-  //       'Success',
-  //       'Cuti berhasil diajukan',
-  //       snackPosition: SnackPosition.TOP,
-  //       colorText: whiteColor,
-  //       backgroundColor: greenColor,
-  //     );
-  //     // The form is valid, you can proceed with saving the value
-  //     // For example, you can update the alasanCuti
-  //     // You can replace the logic below with your actual implementation
-
-  //     alasanController.clear();
-  //     return;
-  //   }
-  //   Get.snackbar(
-  //     'Error',
-  //     'Cuti tidak berhasil diajukan',
-  //     snackPosition: SnackPosition.TOP,
-  //     colorText: whiteColor,
-  //     backgroundColor: redColor,
-  //   );
-  // }
 }
