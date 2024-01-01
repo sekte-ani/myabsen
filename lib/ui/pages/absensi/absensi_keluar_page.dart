@@ -1,5 +1,6 @@
 import 'package:MyAbsen/controller/absensi_controller.dart';
 import 'package:MyAbsen/controller/dashboard_controller.dart';
+import 'package:MyAbsen/controller/profile_controller.dart';
 import 'package:MyAbsen/controller/shared/dateformat_controller.dart';
 import 'package:MyAbsen/controller/shared/latlong_controller.dart';
 import 'package:MyAbsen/theme.dart';
@@ -10,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AbsensiKeluarPage extends GetView<AbsensiController> {
+  ProfileController profileController = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +79,10 @@ class AbsensiKeluarPage extends GetView<AbsensiController> {
 }
 
 Widget buildHeader() {
+  ProfileController profileController = Get.put(ProfileController());
+
+  var profile = profileController.profile;
+
   final DateFormatController dateFormatController =
       Get.put(DateFormatController());
   DateTime currentTime = DateTime.now();
@@ -97,11 +104,13 @@ Widget buildHeader() {
                     fontSize: 14,
                   ),
                 ),
-                Text(
-                  'Aldi Taher',
-                  style: font_semiBold.copyWith(
-                    fontSize: 18,
-                    color: darkGreenColor,
+                Obx(
+                  () => Text(
+                    '${profile["name"]}',
+                    style: font_bold.copyWith(
+                      fontSize: 18,
+                      color: darkGreenColor,
+                    ),
                   ),
                 ),
               ],

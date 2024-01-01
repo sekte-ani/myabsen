@@ -64,7 +64,7 @@ class ProfilePage extends GetView<ProfileController> {
                   height: 16,
                 ),
                 Text(
-                  'Aldi Taher',
+                  '${controller.profile['name'] ?? 'Nama Pengguna'}',
                   style: font_semiBold.copyWith(
                     fontSize: 16,
                   ),

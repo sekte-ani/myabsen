@@ -10,8 +10,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:path/path.dart' as path;
+import 'package:MyAbsen/ui/pages/history/history_card.dart';
 
 class AbsensiPage extends GetView<AbsensiController> {
+  AbsensiController absensiController = Get.put(AbsensiController());
+  ProfileController profileController = Get.put(ProfileController());
+
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw "can not launch url";
+    }
+    ;
+  }
+
+  Future<void> _onRefresh() async {
+    await absensiController.getAttendenceIn();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -64,14 +85,15 @@ class AbsensiPage extends GetView<AbsensiController> {
                 ),
                 HistoryCard(
                   tanggal: "6 Desember 2023",
+                  status: "cuti",
                 ),
-                HistoryCard(
-                  tanggal: "5 Desember 2023",
-                ),
-                HistoryCard(
-                  tanggal: "4 Desember 2023",
-                  status: "Cuti",
-                ),
+                // HistoryCard(
+                //   tanggal: "5 Desember 2023",
+                // ),
+                // HistoryCard(
+                //   tanggal: "4 Desember 2023",
+                //   status: "Cuti",
+                // ),
               ],
             ),
           ),

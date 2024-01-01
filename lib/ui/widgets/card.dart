@@ -306,7 +306,7 @@ class HistoryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      status == "Cuti" ? 'Tanggal Awal':'Jam Masuk',
+                      status == "Cuti" ? 'Tanggal Awal' : 'Jam Masuk',
                       style: font_medium.copyWith(
                         color: Colors.white,
                         fontSize: 16, // Atur ukuran font di sini (misalnya, 18)
@@ -336,7 +336,7 @@ class HistoryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      status == "Cuti" ? 'Tanggal Akhir':'Jam Pulang',
+                      status == "Cuti" ? 'Tanggal Akhir' : 'Jam Pulang',
                       style: font_medium.copyWith(
                         color: Colors.white,
                         fontSize: 16, // Atur ukuran font di sini (misalnya, 18)
