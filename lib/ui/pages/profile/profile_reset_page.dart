@@ -1,3 +1,4 @@
+import 'package:MyAbsen/controller/reset_password_controller.dart';
 import 'package:MyAbsen/theme.dart';
 import 'package:MyAbsen/ui/widgets/buttons.dart';
 import 'package:MyAbsen/ui/widgets/forms.dart';
@@ -5,9 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:MyAbsen/services/reset_service.dart';
+import 'package:MyAbsen/ui/widgets/forms.dart';
+import 'package:MyAbsen/ui/widgets/validator.dart';
 
 class ProfileResetPage extends StatelessWidget {
-  const ProfileResetPage({Key? key}) : super(key: key);
+  // const ProfileResetPage({Key? key}) : super(key: key);
+  final Map? itemReset;
+  ProfileResetPage({
+    Key? key,
+    this.itemReset,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +44,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
   final oldPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  ResetController controller = Get.put(ResetController());
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +71,11 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 title: "Password Baru",
                 hintText: "Masukkan password baru anda..",
                 controller: newPasswordController,
+                validator: Validator.required,
+                value: controller.password,
+                onChange: (value) {
+                  controller.password = value;
+                },
               ),
               const SizedBox(height: 16),
               InputFieldPassword(
@@ -70,8 +85,17 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               ),
               const SizedBox(height: 32),
               PrimaryButton(
-                title: "Ubah Password",
-                onPressed: changePassword,
+                title: "Perbarui Profile",
+                onPressed: controller.isUpdatingPassword.value
+                    ? null
+                    : () {
+                        // print("name : ${controller.name}");
+                        print("phone : ${controller.password}");
+
+                        controller.updatePassword(
+                          password: controller.password!,
+                        );
+                      },
               ),
             ],
           ),

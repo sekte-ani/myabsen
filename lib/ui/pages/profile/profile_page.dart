@@ -1,4 +1,5 @@
 import 'package:MyAbsen/controller/profile_controller.dart';
+import 'package:MyAbsen/controller/reset_password_controller.dart';
 import 'package:MyAbsen/theme.dart';
 import 'package:MyAbsen/ui/pages/login_page.dart';
 import 'package:MyAbsen/ui/pages/profile/profile_edit_page.dart';
@@ -10,6 +11,7 @@ import 'package:get/get.dart';
 
 class ProfilePage extends GetView<ProfileController> {
   ProfileController controller = Get.put(ProfileController());
+  ResetController control = Get.put(ResetController());
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -19,6 +21,7 @@ class ProfilePage extends GetView<ProfileController> {
       ),
     );
     var itemProfile = controller.profile;
+    var itemReset = control.reset;
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -87,7 +90,7 @@ class ProfilePage extends GetView<ProfileController> {
                   iconUrl: Icons.shield_outlined,
                   title: "Reset Password",
                   onTap: () {
-                    Get.to(ProfileResetPage());
+                    Get.to(ProfileResetPage(itemReset: itemReset));
                   },
                 ),
                 ProfileMenuItem(

@@ -171,6 +171,7 @@ class InputFieldPassword extends StatelessWidget {
   final void Function(String?)? onChange;
   final RxBool isChecked = false.obs;
   final RxBool isSwitch = false.obs;
+  final String? value;
 
   InputFieldPassword({
     Key? key,
@@ -180,6 +181,7 @@ class InputFieldPassword extends StatelessWidget {
     this.validator,
     this.inputFormatters,
     this.onChange,
+    this.value,
   });
 
   @override
