@@ -1,3 +1,4 @@
+import 'package:MyAbsen/controller/history_controller.dart';
 import 'package:MyAbsen/theme.dart';
 import 'package:MyAbsen/ui/pages/absensi/absensi_keluar_page.dart';
 import 'package:MyAbsen/ui/pages/absensi/absensi_masuk_page.dart';
@@ -247,21 +248,25 @@ class TotalAbsensiCard extends StatelessWidget {
 }
 
 class HistoryCard extends StatelessWidget {
+  HistoryController controller = Get.put(HistoryController());
+
   final String tanggal;
   final String status;
   final String jamMasuk;
-  final String jamKeluar;
+  final String? jamKeluar;
 
-  const HistoryCard({
+  HistoryCard({
     Key? key,
     required this.tanggal,
-    this.status = "Hadir",
+    this.status = "Absen belum selesai",
     this.jamMasuk = "09:00",
-    this.jamKeluar = "17:00",
+    this.jamKeluar,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final historyData = controller.history;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -270,7 +275,7 @@ class HistoryCard extends StatelessWidget {
           margin: const EdgeInsets.only(
             bottom: 10,
           ),
-          color: status == "Cuti" ? redColor : green2Color,
+          color: status == "Belum selesai" ? redColor : green2Color,
           shape: RoundedRectangleBorder(
             // side: BorderSide(color: green2Color, width: 2.0),
             borderRadius: BorderRadius.circular(10),
@@ -306,7 +311,7 @@ class HistoryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      status == "Cuti" ? 'Tanggal Awal' : 'Jam Masuk',
+                      status == "0" ? 'Tanggal Awal' : 'Jam Masuk',
                       style: font_medium.copyWith(
                         color: Colors.white,
                         fontSize: 16, // Atur ukuran font di sini (misalnya, 18)
@@ -336,14 +341,14 @@ class HistoryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      status == "Cuti" ? 'Tanggal Akhir' : 'Jam Pulang',
+                      status == "0" ? 'Tanggal Akhir' : 'Jam Pulang',
                       style: font_medium.copyWith(
                         color: Colors.white,
                         fontSize: 16, // Atur ukuran font di sini (misalnya, 18)
                       ),
                     ),
                     Text(
-                      jamKeluar,
+                      jamKeluar ?? 'Data tidak ada',
                       style: font_medium.copyWith(
                         color: Colors.white,
                         fontSize: 16, // Atur ukuran font di sini (misalnya, 18)

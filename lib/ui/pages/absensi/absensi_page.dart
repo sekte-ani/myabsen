@@ -87,13 +87,13 @@ class AbsensiPage extends GetView<AbsensiController> {
                   tanggal: "6 Desember 2023",
                   status: "cuti",
                 ),
-                // HistoryCard(
-                //   tanggal: "5 Desember 2023",
-                // ),
-                // HistoryCard(
-                //   tanggal: "4 Desember 2023",
-                //   status: "Cuti",
-                // ),
+                HistoryCard(
+                  tanggal: "5 Desember 2023",
+                ),
+                HistoryCard(
+                  tanggal: "4 Desember 2023",
+                  status: "Cuti",
+                ),
               ],
             ),
           ),

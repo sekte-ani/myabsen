@@ -9,9 +9,9 @@ class DateFormatController extends GetxController {
   RxString jamSekarang = ''.obs;
   RxString greet = ''.obs;
 
-  void formatDate(DateTime date) {
+  String formatDate(DateTime date) {
     initializeDateFormatting();
-    formattedDate.value = DateFormat('d MMMM yyyy', 'id_ID').format(date);
+    return formattedDate.value = DateFormat('d MMMM yyyy', 'id_ID').format(date);
   }
 
   void formatHari(DateTime date) {

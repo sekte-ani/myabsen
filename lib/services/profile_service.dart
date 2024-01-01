@@ -18,7 +18,6 @@ class ProfileService {
       ),
     );
     Map obj = response.data;
-    print("data profile : ${obj}");
     return obj["data"];
   }
 }
