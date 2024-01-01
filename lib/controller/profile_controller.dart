@@ -29,8 +29,8 @@ class ProfileController extends GetxController {
         'Success',
         'Berhasil Logout',
         snackPosition: SnackPosition.TOP,
-        colorText: whiteColor,
-        backgroundColor: green2Color,
+        colorText: green2Color,
+        backgroundColor: whiteColor,
       );
       box.erase();
 
