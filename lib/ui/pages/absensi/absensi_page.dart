@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:MyAbsen/controller/absensi_controller.dart';
 import 'package:MyAbsen/controller/dashboard_controller.dart';
+import 'package:MyAbsen/controller/history_controller.dart';
 import 'package:MyAbsen/controller/profile_controller.dart';
 import 'package:MyAbsen/controller/shared/dateformat_controller.dart';
 import 'package:MyAbsen/theme.dart';
@@ -17,6 +20,8 @@ import 'package:MyAbsen/ui/pages/history/history_card.dart';
 class AbsensiPage extends GetView<AbsensiController> {
   AbsensiController absensiController = Get.put(AbsensiController());
   ProfileController profileController = Get.put(ProfileController());
+  HistoryController historyController = Get.put(HistoryController());
+  DateFormatController dateFormatController = Get.put(DateFormatController());
 
   // Future<void> _launchURL(String url) async {
   //   final Uri uri = Uri.parse(url);
@@ -83,16 +88,51 @@ class AbsensiPage extends GetView<AbsensiController> {
                 const SizedBox(
                   height: 15,
                 ),
-                HistoryCard(
-                  tanggal: "6 Desember 2023",
-                  status: "cuti",
-                ),
-                HistoryCard(
-                  tanggal: "5 Desember 2023",
-                ),
-                HistoryCard(
-                  tanggal: "4 Desember 2023",
-                  status: "Cuti",
+                // Display only 5 HistoryCard
+                Obx(
+                  () => ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: min(5, historyController.history.length),
+                    itemBuilder: (context, index) {
+                      final historyData = historyController.history[index];
+                      final tanggalMasuk = historyData['tanggal_masuk'] != null
+                          ? dateFormatController.formatDate(
+                              DateTime.parse(historyData['tanggal_masuk']),
+                            )
+                          : 'Data tidak tersedia';
+
+                      final tanggalKeluar =
+                          historyData['tanggal_keluar'] != null
+                              ? dateFormatController.formatDate(
+                                  DateTime.parse(historyData['tanggal_keluar']),
+                                )
+                              : 'Data tidak tersedia';
+
+                      final jamMasuk = historyData['jam_masuk'] != null
+                          ? dateFormatController.formatJam(DateTime.parse(
+                              "2023-01-01 ${historyData['jam_masuk']}"))
+                          : 'Data tidak tersedia';
+
+                      final jamKeluar = historyData['jam_keluar'] != null
+                          ? dateFormatController.formatJam(DateTime.parse(
+                              "2023-01-01 ${historyData['jam_keluar']}"))
+                          : 'Data tidak tersedia';
+
+                      return HistoryCard(
+                        tanggal: historyData['status'] == "0"
+                            ? tanggalMasuk
+                            : tanggalKeluar,
+                        status: historyData['status'] == "1"
+                            ? "Absen Selesai"
+                            : "Belum selesai",
+                        jamMasuk: jamMasuk,
+                        jamKeluar: historyData['jam_keluar'] == null
+                            ? "Belum absen"
+                            : jamKeluar,
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

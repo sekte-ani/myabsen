@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:MyAbsen/controller/models/Absensi.dart';
+import 'history_controller.dart';
 import 'shared/dateformat_controller.dart';
 import 'package:MyAbsen/services/absensi_service.dart';
 import 'package:MyAbsen/controller/models/Absensi.dart';
@@ -16,6 +17,15 @@ class AbsensiController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController messageController = TextEditingController();
   // final getStorage = GetStorage();
+  HistoryController historyController = Get.put(HistoryController());
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Load the profile data when the widget is initialized
+    historyController.getHistory();
+    update();
+  }
 
   String? tanggal_masuk;
   String? jam_masuk;
