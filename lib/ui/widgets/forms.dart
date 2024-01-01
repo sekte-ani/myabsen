@@ -14,6 +14,7 @@ class InputField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final void Function(String?)? onChange;
   final String? value;
+  final bool? enabled;
   const InputField({
     Key? key,
     required this.title,
@@ -25,6 +26,7 @@ class InputField extends StatelessWidget {
     this.onChange,
     this.keyboard,
     this.value,
+    this.enabled,
   });
 
   @override
@@ -44,6 +46,7 @@ class InputField extends StatelessWidget {
           obscureText: obscureText,
           initialValue: value,
           controller: controller,
+          enabled: enabled,
           validator: validator,
           inputFormatters: inputFormatters,
           onChanged: onChange,

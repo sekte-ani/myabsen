@@ -24,9 +24,9 @@ class ProfileService {
   }
 
   update({
-    required int id,
-    required String name,
-    required String no_induk,
+    // required int id,
+    // required String name,
+    required String phone,
     required String email,
     required String born,
     required String address,
@@ -36,46 +36,25 @@ class ProfileService {
       "https://myabsen.ferdirns.com/api/profile",
       options: Options(
         headers: {
+          "Accept": "*/*",
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
         },
       ),
       data: {
-        "name": name,
-        "no_induk": no_induk,
+        // "name": name,
+        "phone": phone,
         "email": email,
         "born": born,
         "address": address,
       },
     );
     Map obj = response.data;
-    print(obj);
+    print("Request payload: $phone, $email, $born, $address");
+    print("Response data: ${obj['data']}");
+    print("Full Response: $response");
+
+    print("Status Code: ${response.statusCode}");
     return obj["data"]["id"];
   }
 }
-// import 'package:dio/dio.dart';
-// import 'package:MyAbsen/controller/models/Profile.dart';
-
-// class ProfileService {
-//   final Dio dio = Dio(); // Sesuaikan konfigurasi Dio sesuai kebutuhan
-//   Future<Profile> getProfile() async {
-//     try {
-//       // Lakukan permintaan profil dan parsing respons ke objek Profile
-//       // Di sini Anda harus mengonfigurasi permintaan sesuai dengan kebutuhan API Anda
-//       // Contoh:
-//       Response response =
-//           await dio.get('https://myabsen.ferdirns.com/api/profile');
-//       if (response.statusCode == 200) {
-//         Map<String, dynamic> responseData = response.data["data"];
-//         Profile profile = Profile.fromJson(responseData);
-//         return profile;
-//       } else {
-//         throw Exception('Failed to fetch profile');
-//       }
-//     } catch (e) {
-//       throw Exception('Error fetching profile: $e');
-//     }
-//   }
-
-
-// }

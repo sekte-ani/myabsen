@@ -48,6 +48,7 @@ class ProfileController extends GetxController {
 
   String? name;
   String? no_induk;
+  String? phone;
   String? email;
   String? born;
   String? address;
@@ -59,6 +60,7 @@ class ProfileController extends GetxController {
 
       name = profile['name'];
       no_induk = profile['nomor_induk'];
+      phone = profile['phone'];
       email = profile['email'];
       born = profile['born'];
       address = profile['address'];
@@ -71,30 +73,31 @@ class ProfileController extends GetxController {
   }
 
   Future<void> updateProfile({
-    required String name,
-    required String no_induk,
+    // required String name,
+    // required String no_induk,
+    required String phone,
     required String email,
     required String born,
     required String address,
   }) async {
     try {
       isUpdatingProfile.value = true;
-      int userId = await ProfileService().update(
-        id: profile['id'], // Assuming 'id' is a key in your profile data
-        name: name,
-        no_induk: no_induk,
+      await ProfileService().update(
+        // id: profile['id'], // Assuming 'id' is a key in your profile data
+        // name: name,
+        // no_induk: no_induk,
+        phone: phone,
         email: email,
         born: born,
         address: address,
       );
 
       // Optionally update the local profile data after successful update
-      profile['name'] = name;
-      profile['no_induk'] = no_induk;
+      // profile['name'] = name;
+      profile['phone'] = phone;
       profile['email'] = email;
       profile['born'] = born;
       profile['address'] = address;
-      // profile['password'] = password;
 
       // Notify listeners (if necessary)
       update();

@@ -69,6 +69,7 @@ class ProfileEditPage extends GetView<ProfileController> {
                     InputField(
                       title: "Nama Lengkap",
                       hintText: "Masukkan nama anda...",
+                      enabled: false,
                       validator: Validator.required,
                       value: controller.name,
                       onChange: (value) {
@@ -79,13 +80,13 @@ class ProfileEditPage extends GetView<ProfileController> {
                       height: 16,
                     ),
                     InputField(
-                      title: "No Pegawai",
-                      hintText: "Masukkan nomor pegawai anda...",
+                      title: "Phone",
+                      hintText: "Masukkan nomor telp anda...",
                       // controller: nomorIndukController,
                       validator: Validator.required,
-                      value: controller.no_induk,
+                      value: controller.phone,
                       onChange: (value) {
-                        controller.no_induk = value;
+                        controller.phone = value;
                       },
                     ),
                     const SizedBox(
@@ -134,15 +135,20 @@ class ProfileEditPage extends GetView<ProfileController> {
                       onPressed: controller.isUpdatingProfile.value
                           ? null
                           : () {
+                              // print("name : ${controller.name}");
+                              print("phone : ${controller.phone}");
+                              print("email : ${controller.email}");
+                              print("born : ${controller.born}");
+                              print("address : ${controller.address}");
+
                               controller.updateProfile(
-                                name: controller.name!,
-                                no_induk: controller.no_induk!,
+                                // name: controller.name!,
+                                phone: controller.phone!,
                                 email: controller.email!,
                                 born: controller.born!,
                                 address: controller.address!,
                                 // password: controller.password!,
                               );
-                              print("name : ${controller.name}");
                             },
                     ),
                     const SizedBox(
