@@ -8,9 +8,17 @@ import 'package:MyAbsen/ui/widgets/buttons.dart';
 import 'package:MyAbsen/ui/widgets/forms.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:MyAbsen/controller/absensi_controller.dart';
 
 class AbsensiMasukPage extends GetView<AbsensiController> {
+  // final AbsensiController controller = Get.put(AbsensiController());
   ProfileController profileController = Get.put(ProfileController());
+  final RxBool submitted = false.obs;
+
+  void submitQuestion() {
+    // Add logic to send the question or message
+    submitted.value = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +145,14 @@ Widget buildHeader() {
 
 Widget buildDataAbsen() {
   LatLongController _latLongController = Get.put(LatLongController());
+  final AbsensiController controller = Get.put(AbsensiController());
+  final RxBool submitted = false.obs;
+
+  void submitQuestion() {
+    // Add logic to send the question or message
+    submitted.value = true;
+  }
+
   final DateFormatController dateFormatController =
       Get.put(DateFormatController());
   DateTime currentDate = DateTime.now();
@@ -224,11 +240,25 @@ Widget buildDataAbsen() {
         height: 40,
       ),
       PrimaryButton(
-        title: 'Absen Masuk',
+        title: "Absen Masuk",
         onPressed: () {
-          Get.back();
+          controller.doKirim();
+          // Get.back();
         },
       ),
+      SizedBox(height: 20),
+      Obx(
+        () => submitted.value
+            ? Text(
+                'Selamat, anda telah absen!',
+                style: TextStyle(
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            : Container(),
+      ),
+      SizedBox(height: 200),
     ],
   );
 }

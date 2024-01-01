@@ -9,18 +9,18 @@ import 'package:MyAbsen/services/absensi_service.dart';
 import 'package:MyAbsen/controller/models/Absensi.dart';
 import 'package:MyAbsen/controller/models/History.dart';
 import 'package:flutter/material.dart';
-import 'package:MyAbsen/services/absensiMasuk_service.dart';
+import 'package:MyAbsen/services/absensiKeluar_service.dart';
 import 'package:MyAbsen/theme.dart';
 
-class AbsensiController extends GetxController {
+class AbsensiKeluarController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController messageController = TextEditingController();
   // final getStorage = GetStorage();
 
-  String? tanggal_masuk;
-  String? jam_masuk;
-  String? lat_in;
-  String? long_in;
+  String? tanggal_keluar;
+  String? jam_keluar;
+  String? lat_out;
+  String? long_out;
 
   RxString selected = ''.obs;
   final DateFormatController dateFormatController =
@@ -32,11 +32,11 @@ class AbsensiController extends GetxController {
     if (!isValid) {
       return;
     }
-    bool isSuccess = await AbsenMasukService().create(
-      tanggalMasuk: tanggal_masuk!,
-      jamMasuk: jam_masuk!,
-      latIn: lat_in!,
-      longIn: long_in!,
+    bool isSuccess = await AbsenKeluarService().create(
+      tanggalKeluar: tanggal_keluar!,
+      jamKeluar: jam_keluar!,
+      latOut: lat_out!,
+      longOut: long_out!,
     );
 
     if (!isSuccess) {
@@ -51,7 +51,7 @@ class AbsensiController extends GetxController {
     } else {
       Get.snackbar(
         'Success',
-        'Forum berhasil terkirim',
+        'Anda Telah Absen Pulang',
         snackPosition: SnackPosition.TOP,
         colorText: whiteColor,
         backgroundColor: green2Color,
