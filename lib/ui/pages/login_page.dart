@@ -9,7 +9,7 @@ import 'package:MyAbsen/theme.dart';
 import 'package:flutter/services.dart';
 
 class LoginPage extends GetView<LoginController> {
-  final LoginController controller = Get.find<LoginController>();
+  LoginController controller = Get.put(LoginController());
 
   // TextEditingController properties
   TextEditingController emailController = TextEditingController();

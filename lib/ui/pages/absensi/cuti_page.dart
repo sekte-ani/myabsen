@@ -262,26 +262,43 @@ class CutiPage extends GetView<CutiController> {
                                       height: 50,
                                       child: ElevatedButton(
                                         onPressed: () async {
-                                          controller.tanggal_mulai =
-                                              DateFormat('yyyy-MM-dd').format(
-                                                  datePickerController
-                                                      .startDate!);
-                                          controller.tanggal_berakhir =
-                                              DateFormat('yyyy-MM-dd').format(
-                                                  datePickerController
-                                                      .endDate!);
-                                          dataCuti["status"] == "tunggu"
-                                              ? Get.snackbar(
-                                                  'Peringatan!',
-                                                  'Status cuti anda sedang diproses',
-                                                  snackPosition:
-                                                      SnackPosition.TOP,
-                                                  colorText: black2Color,
-                                                  backgroundColor: yellow2Color,
-                                                )
-                                              : await controller.onSubmit();
-                                          controller.getCuti();
-                                          alasanController.clear();
+                                          if (datePickerController.startDate !=
+                                                  null &&
+                                              datePickerController.endDate !=
+                                                  null) {
+                                            controller.tanggal_mulai =
+                                                DateFormat('yyyy-MM-dd').format(
+                                                    datePickerController
+                                                        .startDate!);
+                                            controller.tanggal_berakhir =
+                                                DateFormat('yyyy-MM-dd').format(
+                                                    datePickerController
+                                                        .endDate!);
+
+                                            dataCuti["status"] == "tunggu"
+                                                ? Get.snackbar(
+                                                    'Peringatan!',
+                                                    'Status cuti anda sedang diproses',
+                                                    snackPosition:
+                                                        SnackPosition.TOP,
+                                                    colorText: black2Color,
+                                                    backgroundColor:
+                                                        yellow2Color,
+                                                  )
+                                                : await controller.onSubmit();
+
+                                            controller.getCuti();
+                                            alasanController.clear();
+                                          } else {
+                                            // Handle case where startDate or endDate is null
+                                            Get.snackbar(
+                                              'Peringatan!',
+                                              'Tanggal tidak boleh kosong',
+                                              snackPosition: SnackPosition.TOP,
+                                              colorText: black2Color,
+                                              backgroundColor: yellow2Color,
+                                            );
+                                          }
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: greenColor,
