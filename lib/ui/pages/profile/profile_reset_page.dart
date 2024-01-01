@@ -77,9 +77,9 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 hintText: "Masukkan password baru anda..",
                 controller: newPasswordController,
                 validator: Validator.required,
-                value: controller.password_confirmation,
+                value: controller.passwordConfirmation,
                 onChange: (value) {
-                  controller.password_confirmation = value;
+                  controller.passwordConfirmation = value;
                 },
               ),
               const SizedBox(height: 16),
@@ -88,9 +88,9 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 hintText: "Masukkan ulang password baru..",
                 controller: confirmPasswordController,
                 validator: Validator.required,
-                value: controller.current_password,
+                value: controller.currentPassword,
                 onChange: (value) {
-                  controller.current_password = value;
+                  controller.currentPassword = value;
                 },
               ),
               const SizedBox(height: 32),
@@ -102,15 +102,15 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                         // print("name : ${controller.name}");
                         print("password: ${controller.password}");
                         print(
-                            "password_confirmation: ${controller.password_confirmation}");
+                            "password_confirmation: ${controller.passwordConfirmation}");
                         print(
-                            "current_password: ${controller.current_password}");
+                            "current_password: ${controller.currentPassword}");
 
                         controller.updatePassword(
                           password: controller.password!,
                           password_confirmation:
-                              controller.password_confirmation!,
-                          current_password: controller.current_password!,
+                              controller.passwordConfirmation!,
+                          current_password: controller.currentPassword!,
                         );
                       },
               ),
@@ -142,8 +142,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           // Tambahkan header otentikasi jika diperlukan
         },
         body: jsonEncode({
-          'old_password': oldPassword,
-          'new_password': newPassword,
+          // 'old_password': oldPassword,
+          // 'new_password': newPassword,
           // Tambahkan field lain yang dibutuhkan
         }),
       );
