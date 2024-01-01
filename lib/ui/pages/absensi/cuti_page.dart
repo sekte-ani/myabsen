@@ -16,6 +16,10 @@ class CutiPage extends GetView<CutiController> {
   CutiController controller = Get.put(CutiController());
   DateFormatController dateFormatController = Get.put(DateFormatController());
 
+  Future<void> _onRefresh() async {
+    await controller.getCuti();
+  }
+
   @override
   Widget build(BuildContext context) {
     var dataCuti = controller.cuti;
@@ -34,264 +38,292 @@ class CutiPage extends GetView<CutiController> {
         ),
         backgroundColor: green2Color,
       ),
-      body: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 350,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-            ),
-            decoration: BoxDecoration(
-              color: green2Color,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Tanggal Awal",
-                          style: font_semiBold.copyWith(
-                            color: whiteColor,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Obx(
-                          () => Text(
-                            (dataCuti["tanggal_mulai"] != null)
-                                ? DateFormat('dd MMMM yyyy', 'id_ID')
-                                    .format(DateTime.parse(
-                                        dataCuti["tanggal_mulai"]))
-                                    .toString()
-                                : "null",
-                            style: font_regular.copyWith(
+      body: RefreshIndicator(
+        onRefresh: _onRefresh,
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: 350,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+              ),
+              decoration: BoxDecoration(
+                color: green2Color,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Tanggal Awal",
+                            style: font_semiBold.copyWith(
                               color: whiteColor,
+                              fontSize: 16,
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        Text(
-                          "Tanggal Akhir",
-                          style: font_semiBold.copyWith(
-                            color: whiteColor,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Obx(
-                          () => Text(
-                            (dataCuti["tanggal_mulai"] != null)
-                                ? DateFormat('dd MMMM yyyy', 'id_ID')
-                                    .format(DateTime.parse(
-                                        dataCuti["tanggal_berakhir"]))
-                                    .toString()
-                                : "null",
-                            style: font_regular.copyWith(
-                              color: whiteColor,
+                          Obx(
+                            () => Text(
+                              (dataCuti["tanggal_mulai"] != null)
+                                  ? DateFormat('dd MMMM yyyy', 'id_ID')
+                                      .format(DateTime.parse(
+                                          dataCuti["tanggal_mulai"]))
+                                      .toString()
+                                  : "null",
+                              style: font_regular.copyWith(
+                                color: whiteColor,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        right: 5,
-                        bottom: 40,
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          Text(
+                            "Tanggal Akhir",
+                            style: font_semiBold.copyWith(
+                              color: whiteColor,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Obx(
+                            () => Text(
+                              (dataCuti["tanggal_mulai"] != null)
+                                  ? DateFormat('dd MMMM yyyy', 'id_ID')
+                                      .format(DateTime.parse(
+                                          dataCuti["tanggal_berakhir"]))
+                                      .toString()
+                                  : "null",
+                              style: font_regular.copyWith(
+                                color: whiteColor,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                        ],
                       ),
-                      child: Container(
-                        padding: const EdgeInsets.all(
-                          20,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          right: 5,
+                          bottom: 40,
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.all(
+                            20,
+                          ),
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Status",
+                                style: font_semiBold.copyWith(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Obx(
+                                () {
+                                  String statusText;
+                                  Color statusColor;
+
+                                  switch (dataCuti["status"]) {
+                                    case "tunggu":
+                                      statusText = "Diproses";
+                                      statusColor = yellowColor;
+                                      break;
+                                    case "diterima":
+                                      statusText = "Diterima";
+                                      statusColor = greenColor;
+                                      break;
+                                    case "ditolak":
+                                      statusText = "Ditolak";
+                                      statusColor = redColor;
+                                      break;
+
+                                    default:
+                                      statusText =
+                                          "No Data"; // Change to your default text
+                                      statusColor = Colors
+                                          .black; // Choose the color you want
+                                  }
+
+                                  return Text(
+                                    statusText,
+                                    style: font_regular.copyWith(
+                                      color: statusColor,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    "Alasan Cuti",
+                    style: font_semiBold.copyWith(
+                      color: whiteColor,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Obx(
+                    () => Text(
+                      "${dataCuti["alasan"]}",
+                      style: font_regular.copyWith(
+                        color: whiteColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              child: ListView(
+                children: [
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 300,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
                         ),
                         decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: BorderRadius.circular(16),
+                          color: bgColor,
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(27),
+                          ),
                         ),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Status",
-                              style: font_semiBold.copyWith(
-                                fontSize: 16,
+                        child: Form(
+                          key: controller.formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 32,
                               ),
-                            ),
-                            Obx(
-                              () => Text(
-                                "${dataCuti["status"]}",
-                                style: font_regular.copyWith(
-                                  color: redColor,
-                                ),
+                              InputFieldBox(
+                                title: "Alasan Cuti",
+                                hintText: "Deskripsikan alasan anda cuti...",
+                                controller: alasanController,
+                                validator: Validator.required,
+                                onChange: (value) {
+                                  controller.alasan = value;
+                                },
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  "Alasan Cuti",
-                  style: font_semiBold.copyWith(
-                    color: whiteColor,
-                    fontSize: 16,
-                  ),
-                ),
-                Obx(
-                  () => Text(
-                    "${dataCuti["alasan"]}",
-                    style: font_regular.copyWith(
-                      color: whiteColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            child: ListView(
-              children: [
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 300,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                      ),
-                      decoration: BoxDecoration(
-                        color: bgColor,
-                        borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(27),
-                        ),
-                      ),
-                      child: Form(
-                        key: controller.formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 32,
-                            ),
-                            InputFieldBox(
-                              title: "Alasan Cuti",
-                              hintText: "Deskripsikan alasan anda cuti...",
-                              controller: alasanController,
-                              validator: Validator.required,
-                              onChange: (value) {
-                                controller.alasan = value;
-                              },
-                            ),
-                            const SizedBox(
-                              height: 35,
-                            ),
+                              const SizedBox(
+                                height: 35,
+                              ),
 
-                            Row(
-                              children: [
-                                Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: greenColor,
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.calendar_month,
+                              Row(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: greenColor,
+                                      borderRadius: BorderRadius.circular(16),
                                     ),
-                                    color: whiteColor,
-                                    splashColor: bgColor,
-                                    onPressed: () async {
-                                      await datePickerController
-                                          .chooseDateRange();
-                                      // print(
-                                      //     "Start Date: ${datePickerController.startDate}");
-                                      // print(
-                                      //     "End Date: ${datePickerController.endDate}");
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    height: 50,
-                                    child: ElevatedButton(
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.calendar_month,
+                                      ),
+                                      color: whiteColor,
+                                      splashColor: bgColor,
                                       onPressed: () async {
-                                        controller.tanggal_mulai =
-                                            DateFormat('yyyy-MM-dd').format(
-                                                datePickerController
-                                                    .startDate!);
-                                        controller.tanggal_berakhir =
-                                            DateFormat('yyyy-MM-dd').format(
-                                                datePickerController.endDate!);
+                                        await datePickerController
+                                            .chooseDateRange();
                                         // print(
-                                        //     "Start Date: ${DateFormat('yyyy-MM-dd').format(datePickerController.startDate!)}");
+                                        //     "Start Date: ${datePickerController.startDate}");
                                         // print(
-                                        //     "End Date: ${DateFormat('yyyy-MM-dd').format(datePickerController.endDate!)}");
-                                        print(
-                                            "Alasannye : ${controller.tanggal_mulai}");
-                                        print(
-                                            "Alasannye : ${controller.tanggal_berakhir}");
-                                        print(
-                                            "Alasannye : ${controller.alasan}");
-
-                                        await controller.onSubmit();
-                                        controller.getCuti();
-                                        alasanController.clear();
+                                        //     "End Date: ${datePickerController.endDate}");
                                       },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: greenColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      height: 50,
+                                      child: ElevatedButton(
+                                        onPressed: () async {
+                                          controller.tanggal_mulai =
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  datePickerController
+                                                      .startDate!);
+                                          controller.tanggal_berakhir =
+                                              DateFormat('yyyy-MM-dd').format(
+                                                  datePickerController
+                                                      .endDate!);
+                                          dataCuti["status"] == "tunggu"
+                                              ? Get.snackbar(
+                                                  'Peringatan!',
+                                                  'Status cuti anda sedang diproses',
+                                                  snackPosition:
+                                                      SnackPosition.TOP,
+                                                  colorText: black2Color,
+                                                  backgroundColor: yellow2Color,
+                                                )
+                                              : await controller.onSubmit();
+                                          controller.getCuti();
+                                          alasanController.clear();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: greenColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
                                         ),
-                                      ),
-                                      child: Text(
-                                        "Ajukan Cuti",
-                                        style: font_semiBold.copyWith(
-                                          fontSize: 16,
-                                          color: whiteColor,
+                                        child: Text(
+                                          "Ajukan Cuti",
+                                          style: font_semiBold.copyWith(
+                                            fontSize: 16,
+                                            color: whiteColor,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            // buildDataAbsen(),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            Text(
-                              "Notes : \nPilih range waktu cuti anda pada icon calendar",
-                              style: font_regular.copyWith(
-                                color: darkGreyColor,
-                                fontSize: 12,
+                                ],
                               ),
-                            ),
-                          ],
+                              // buildDataAbsen(),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                              Text(
+                                "Notes : \nPilih range waktu cuti anda pada icon calendar",
+                                style: font_regular.copyWith(
+                                  color: darkGreyColor,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
