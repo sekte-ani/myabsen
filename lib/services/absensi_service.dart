@@ -25,7 +25,7 @@ class AbsensiService {
     return data;
   }
 
-  doCheckAbsensi() async {
+  Future<bool> doCheckAbsensi() async {
     String? token = box.read("token");
     var response = await Dio().get(
       "https://myabsen.ferdirns.com/api/attendance-in-check",
@@ -38,6 +38,8 @@ class AbsensiService {
     );
 
     Map obj = response.data;
-    return obj["status"];
+    bool status = obj["status"];
+    print("Status from API: $status");
+    return status;
   }
 }

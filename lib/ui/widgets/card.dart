@@ -12,9 +12,10 @@ class AbsensiCard extends StatelessWidget {
 
   AbsensiController absensiController = Get.put(AbsensiController());
 
-
   @override
   Widget build(BuildContext context) {
+    // var statusAbsen = absensiController.statusCheckAbs.value;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(22),
@@ -31,37 +32,57 @@ class AbsensiCard extends StatelessWidget {
               Expanded(
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => AbsensiMasukPage());
+                    absensiController.statusCheckAbs.value == false
+                        ? Get.to(() => AbsensiMasukPage())
+                        : Get.snackbar(
+                            "Reminder!",
+                            "Anda belum Absen Pulang",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: blackColor,
+                            backgroundColor: yellow2Color,
+                          );
+                    print(
+                        "Status absen saat iin : ${absensiController.statusCheckAbs.value}");
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(22),
-                    decoration: BoxDecoration(
-                      color: green2Color,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Absen Masuk",
-                          style: font_regular.copyWith(
-                            color: whiteColor,
-                            fontSize: 12,
-                          ),
+                  child: Obx(() => Container(
+                        padding: const EdgeInsets.all(22),
+                        decoration: BoxDecoration(
+                          color: absensiController.statusCheckAbs.value == false
+                              ? yellow2Color
+                              : green2Color,
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        const SizedBox(
-                          height: 10,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Absen Masuk",
+                              style: font_regular.copyWith(
+                                color: absensiController.statusCheckAbs.value ==
+                                        false
+                                    ? black2Color
+                                    : whiteColor,
+                                fontSize: 12,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              absensiController.statusCheckAbs.value == false
+                                  ? "Belum Absen"
+                                  : "Sudah Absen",
+                              style: font_semiBold.copyWith(
+                                color: absensiController.statusCheckAbs.value ==
+                                        false
+                                    ? black2Color
+                                    : whiteColor,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "Sudah Absen",
-                          style: font_semiBold.copyWith(
-                            color: whiteColor,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      )),
                 ),
               ),
               const SizedBox(
@@ -70,37 +91,57 @@ class AbsensiCard extends StatelessWidget {
               Expanded(
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => AbsensiKeluarPage());
+                    absensiController.statusCheckAbs.value == true
+                        ? Get.to(() => AbsensiKeluarPage())
+                        : Get.snackbar(
+                            "Reminder!",
+                            "Anda belum Absen Masuk",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: blackColor,
+                            backgroundColor: yellow2Color,
+                          );
+                    print(
+                        "Status absen saat iin : ${absensiController.statusCheckAbs.value}");
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(22),
-                    decoration: BoxDecoration(
-                      color: yellow2Color,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Absen Pulang",
-                          style: font_regular.copyWith(
-                            color: black2Color,
-                            fontSize: 12,
-                          ),
+                  child: Obx(() => Container(
+                        padding: const EdgeInsets.all(22),
+                        decoration: BoxDecoration(
+                          color: absensiController.statusCheckAbs.value == true
+                              ? yellow2Color
+                              : green2Color,
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        const SizedBox(
-                          height: 10,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Absen Pulang",
+                              style: font_regular.copyWith(
+                                color: absensiController.statusCheckAbs.value ==
+                                        true
+                                    ? black2Color
+                                    : whiteColor,
+                                fontSize: 12,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              absensiController.statusCheckAbs.value == true
+                                  ? "Belum Absen"
+                                  : "Sudah Absen",
+                              style: font_semiBold.copyWith(
+                                color: absensiController.statusCheckAbs.value ==
+                                        true
+                                    ? black2Color
+                                    : whiteColor,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "Belum Absen",
-                          style: font_semiBold.copyWith(
-                            color: black2Color,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      )),
                 ),
               ),
             ],

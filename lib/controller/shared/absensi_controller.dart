@@ -1,3 +1,5 @@
+import 'package:MyAbsen/controller/history_controller.dart';
+import 'package:MyAbsen/controller/shared/dateformat_controller.dart';
 import 'package:MyAbsen/services/absensiKeluar_service.dart';
 import 'package:MyAbsen/services/absensi_service.dart';
 import 'package:MyAbsen/services/count_service.dart';
@@ -8,8 +10,6 @@ import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:MyAbsen/controller/models/Absensi.dart';
-import 'history_controller.dart';
-import 'shared/dateformat_controller.dart';
 import 'package:MyAbsen/services/absensi_service.dart';
 import 'package:MyAbsen/controller/models/Absensi.dart';
 import 'package:MyAbsen/controller/models/History.dart';
@@ -29,8 +29,7 @@ class AbsensiController extends GetxController {
   void onInit() async {
     super.onInit();
     await historyController.getHistory();
-    doTotalAbsensi();
-    doStatusCheck();
+    await doTotalAbsensi();
     update();
     print('onInit called');
   }
@@ -41,6 +40,7 @@ class AbsensiController extends GetxController {
     update(); // Update the widget tree
     print('onResume called');
   }
+
 
 // fungsi untuk check status absensi
   RxBool statusCheckAbs = false.obs;
