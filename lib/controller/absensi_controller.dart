@@ -87,6 +87,8 @@ class AbsensiController extends GetxController {
       );
 
       historyController.getHistory();
+      doTotalAbsensi();
+
       update();
 
       Get.off(() => DashboardPage());
@@ -125,6 +127,8 @@ class AbsensiController extends GetxController {
         backgroundColor: green2Color,
       );
       historyController.getHistory();
+      doTotalAbsensi();
+
       update();
 
       Get.off(() => DashboardPage());
