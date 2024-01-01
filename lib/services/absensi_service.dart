@@ -24,4 +24,20 @@ class AbsensiService {
     List data = obj["data"];
     return data;
   }
+
+  doCheckAbsensi() async {
+    String? token = box.read("token");
+    var response = await Dio().get(
+      "https://myabsen.ferdirns.com/api/attendance-in-check",
+      options: Options(
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      ),
+    );
+
+    Map obj = response.data;
+    return obj["status"];
+  }
 }

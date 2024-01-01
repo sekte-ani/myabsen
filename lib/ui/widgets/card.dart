@@ -8,7 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AbsensiCard extends StatelessWidget {
-  const AbsensiCard({super.key});
+  // const AbsensiCard({super.key});
+
+  AbsensiController absensiController = Get.put(AbsensiController());
+
 
   @override
   Widget build(BuildContext context) {
