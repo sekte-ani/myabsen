@@ -65,12 +65,6 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 title: "Password Lama",
                 hintText: "Masukkan password lama anda..",
                 controller: oldPasswordController,
-              ),
-              const SizedBox(height: 16),
-              InputFieldPassword(
-                title: "Password Baru",
-                hintText: "Masukkan password baru anda..",
-                controller: newPasswordController,
                 validator: Validator.required,
                 value: controller.password,
                 onChange: (value) {
@@ -79,9 +73,25 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               ),
               const SizedBox(height: 16),
               InputFieldPassword(
+                title: "Password Baru",
+                hintText: "Masukkan password baru anda..",
+                controller: newPasswordController,
+                validator: Validator.required,
+                value: controller.password_confirmation,
+                onChange: (value) {
+                  controller.password_confirmation = value;
+                },
+              ),
+              const SizedBox(height: 16),
+              InputFieldPassword(
                 title: "Konfirmasi Password",
                 hintText: "Masukkan ulang password baru..",
                 controller: confirmPasswordController,
+                validator: Validator.required,
+                value: controller.current_password,
+                onChange: (value) {
+                  controller.current_password = value;
+                },
               ),
               const SizedBox(height: 32),
               PrimaryButton(
@@ -91,9 +101,16 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                     : () {
                         // print("name : ${controller.name}");
                         print("password: ${controller.password}");
+                        print(
+                            "password_confirmation: ${controller.password_confirmation}");
+                        print(
+                            "current_password: ${controller.current_password}");
 
                         controller.updatePassword(
                           password: controller.password!,
+                          password_confirmation:
+                              controller.password_confirmation!,
+                          current_password: controller.current_password!,
                         );
                       },
               ),

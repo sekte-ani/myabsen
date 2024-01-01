@@ -24,6 +24,8 @@ class ResetController extends GetxController {
   RxBool isUpdatingPassword = false.obs;
 
   String? password;
+  String? password_confirmation;
+  String? current_password;
 
   RxMap reset = {}.obs;
   Future<void> getPassword() async {
@@ -31,7 +33,8 @@ class ResetController extends GetxController {
       reset.value = await ResetService().get();
 
       reset = reset['password'];
-      ;
+      reset = reset['password_confirmation'];
+      reset = reset['current_password'];
 
       update();
     } catch (e) {
@@ -42,14 +45,20 @@ class ResetController extends GetxController {
 
   Future<void> updatePassword({
     required String password,
+    required String password_confirmation,
+    required String current_password,
   }) async {
     try {
       isUpdatingPassword.value = true;
       await ResetService().update(
         password: password,
+        password_confirmation: password_confirmation,
+        current_password: current_password,
       );
 
       reset['password'] = password;
+      reset['password_confirmation'] = password_confirmation;
+      reset['current_password'] = current_password;
 
       // Notify listeners (if necessary)
       update();

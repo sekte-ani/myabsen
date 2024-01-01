@@ -25,6 +25,8 @@ class ResetService {
 
   update({
     required String password,
+    required String password_confirmation,
+    required String current_password,
   }) async {
     String? token = box.read("token");
     var response = await Dio().post(
@@ -38,6 +40,8 @@ class ResetService {
       ),
       data: {
         "password": password,
+        "password_confirmation": password_confirmation,
+        "current_password": current_password,
       },
     );
     Map obj = response.data;
