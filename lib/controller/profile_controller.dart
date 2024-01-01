@@ -13,6 +13,12 @@ class ProfileController extends GetxController {
   final box = GetStorage();
   final AuthService authService = AuthService();
 
+  @override
+  void onInit() {
+    super.onInit();
+    getProfiles();
+  }
+
   void onLogout() async {
     // Call the logout method from the AuthService
     bool logoutSuccess = await authService.logout();
@@ -34,21 +40,11 @@ class ProfileController extends GetxController {
       // Handle logout failure (display an error message, etc.)
       print('Logout failed');
     }
+  }
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   RxBool isUpdatingProfile = false.obs;
-  onLogout() {
-    box.erase();
-    Get.offAll(LoginPage());
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    getProfiles();
-  }
-
-  void initState() {}
 
   String? name;
   String? no_induk;
