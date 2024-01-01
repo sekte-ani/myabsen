@@ -20,7 +20,33 @@ class ProfileService {
     Map obj = response.data;
     return obj["data"];
   }
-  
+
+  update({
+    required int id,
+    required String phone,
+    required String born,
+    required String address,
+    required String password,
+  }) async {
+    String? token = box.read("token");
+    var response = await Dio().patch(
+      "",
+      options: Options(
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      ),
+      data: {
+        "password": password,
+        "phone": phone,
+        "address": address,
+        "born": born,
+      },
+    );
+    Map obj = response.data;
+    return obj["data"]["id"];
+  }
 }
 // import 'package:dio/dio.dart';
 // import 'package:MyAbsen/controller/models/Profile.dart';
@@ -46,23 +72,5 @@ class ProfileService {
 //     }
 //   }
 
-//   Future<void> updateProfile(Profile updatedProfile) async {
-//     try {
-//       final response = await dio.put(
-//         'https://myabsen.ferdirns.com/api/profile/${updatedProfile.id}',
-//         data: updatedProfile.toJson(),
-//         // Tambahkan headers jika diperlukan
-//       );
-//       if (response.statusCode == 200) {
-//         print('Profile updated successfully');
-//         // Handle success
-//       } else {
-//         print('Failed to update profile');
-//         // Handle failure
-//       }
-//     } catch (e) {
-//       print('Error updating profile: $e');
-//       // Handle error
-//     }
-//   }
+
 // }
