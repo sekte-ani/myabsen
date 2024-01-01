@@ -107,8 +107,8 @@ class ProfileController extends GetxController {
         'Success',
         'Profile Update Successful',
         snackPosition: SnackPosition.TOP,
-        colorText: whiteColor,
-        backgroundColor: green2Color,
+        colorText: green2Color,
+        backgroundColor: whiteColor,
       );
       await getProfiles();
     } catch (e) {
@@ -118,8 +118,8 @@ class ProfileController extends GetxController {
         'Error',
         'Profile Update Failed',
         snackPosition: SnackPosition.TOP,
-        colorText: whiteColor,
-        backgroundColor: redColor,
+        colorText: redColor,
+        backgroundColor: whiteColor,
       );
     } finally {
       // Set isUpdatingProfile to false when the update is completed
