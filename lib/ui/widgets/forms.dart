@@ -13,7 +13,7 @@ class InputField extends StatelessWidget {
   final TextInputType? keyboard;
   final List<TextInputFormatter>? inputFormatters;
   final void Function(String?)? onChange;
-
+  final String? value;
   const InputField({
     Key? key,
     required this.title,
@@ -24,6 +24,7 @@ class InputField extends StatelessWidget {
     this.inputFormatters,
     this.onChange,
     this.keyboard,
+    this.value,
   });
 
   @override
@@ -41,6 +42,7 @@ class InputField extends StatelessWidget {
         ),
         TextFormField(
           obscureText: obscureText,
+          initialValue: value,
           controller: controller,
           validator: validator,
           inputFormatters: inputFormatters,
@@ -250,6 +252,7 @@ class InputFieldBox extends StatelessWidget {
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? inputFormatters;
   final void Function(String?)? onChange;
+  final String? value;
 
   const InputFieldBox({
     Key? key,
@@ -260,6 +263,7 @@ class InputFieldBox extends StatelessWidget {
     this.validator,
     this.inputFormatters,
     this.onChange,
+    this.value,
   });
 
   @override
@@ -326,13 +330,16 @@ class InputFieldDate extends StatelessWidget {
   final TextEditingController? controller;
   final DatePickerController dateController = Get.put(DatePickerController());
   final TextEditingController _dateController = TextEditingController();
-
+  final DateTime? value;
+  final Function(DateTime) onChanged;
   InputFieldDate({
     Key? key,
     required this.title,
     required this.hintText,
     this.obscureText = false,
     this.controller,
+    this.value,
+    required this.onChanged,
   });
 
   @override

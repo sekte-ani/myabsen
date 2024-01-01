@@ -1,14 +1,18 @@
 import 'package:MyAbsen/services/profile_service.dart';
-import 'package:MyAbsen/controller/models/Profile.dart'; // Pastikan impor kelas Profile ada di sini
+import 'package:MyAbsen/controller/models/Profile.dart';
+import 'package:flutter/material.dart'; // Pastikan impor kelas Profile ada di sini
 import 'package:MyAbsen/ui/pages/login_page.dart';
 import 'package:get/get.dart';
+import 'package:MyAbsen/theme.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileController extends GetxController {
   final box = GetStorage();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  void onLogout() {
+  RxBool isUpdatingProfile = false.obs;
+  onLogout() {
     box.erase();
     Get.offAll(LoginPage());
   }
@@ -19,11 +23,25 @@ class ProfileController extends GetxController {
     getProfiles();
   }
 
-  RxMap profile = {}.obs;
+  void initState() {}
 
+  String? name;
+  String? no_induk;
+  String? email;
+  String? born;
+  String? address;
+  // String? password;
+  RxMap profile = {}.obs;
   Future<void> getProfiles() async {
     try {
       profile.value = await ProfileService().get();
+
+      name = profile['name'];
+      no_induk = profile['nomor_induk'];
+      email = profile['email'];
+      born = profile['born'];
+      address = profile['address'];
+
       update();
     } catch (e) {
       print('Error fetching profiles: $e');
@@ -31,58 +49,57 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<void> onUpdateProfile(Profile updatedProfile) async {
-    String apiUrl =
-        'https://myabsen.ferdirns.com/api/profile/${updatedProfile.id}';
-
+  Future<void> updateProfile({
+    required String name,
+    required String no_induk,
+    required String email,
+    required String born,
+    required String address,
+  }) async {
     try {
-      print('Updated Profile ID: ${updatedProfile.id}');
-
-      var response = await http.put(
-        Uri.parse(apiUrl),
-        body: {
-          'name': updatedProfile.name,
-          'nomor_induk': updatedProfile.nomorInduk,
-          'email': updatedProfile.email,
-          'born': updatedProfile.born,
-          'address': updatedProfile.address,
-        },
-        // tambahkan headers jika diperlukan
+      isUpdatingProfile.value = true;
+      int userId = await ProfileService().update(
+        id: profile['id'], // Assuming 'id' is a key in your profile data
+        name: name,
+        no_induk: no_induk,
+        email: email,
+        born: born,
+        address: address,
       );
 
-      if (response.statusCode == 200) {
-        // Handle jika permintaan sukses
-        print('Profil berhasil diperbarui');
-      } else {
-        // Handle jika permintaan gagal
-        print('Gagal memperbarui profil');
-        print('Status Code: ${response.statusCode}');
-        print('Error Message: ${response.body}');
-      }
+      // Optionally update the local profile data after successful update
+      profile['name'] = name;
+      profile['no_induk'] = no_induk;
+      profile['email'] = email;
+      profile['born'] = born;
+      profile['address'] = address;
+      // profile['password'] = password;
+
+      // Notify listeners (if necessary)
+      update();
+
+      // Show success message or handle success as needed
+      Get.snackbar(
+        'Success',
+        'Profile Update Successful',
+        snackPosition: SnackPosition.TOP,
+        colorText: whiteColor,
+        backgroundColor: green2Color,
+      );
+      await getProfiles();
     } catch (e) {
-      print('Terjadi kesalahan: $e');
+      print('Error updating profile: $e');
+      // Handle error as needed
+      Get.snackbar(
+        'Error',
+        'Profile Update Failed',
+        snackPosition: SnackPosition.TOP,
+        colorText: whiteColor,
+        backgroundColor: redColor,
+      );
+    } finally {
+      // Set isUpdatingProfile to false when the update is completed
+      isUpdatingProfile.value = false;
     }
   }
 }
-  // void getProfile() async {
-  //   try {
-  //     Profile fetchedProfile = await ProfileService()
-  //         .getProfile(); // Panggil fungsi getProfile dari ProfileService
-  //     profile.value = fetchedProfile.toJson();
-  //     update();
-  //   } catch (e) {
-  //     print('Error fetching profile: $e');
-  //     // Handle error as needed
-  //   }
-  // }
-
-  // void onUpdateProfile(Profile updatedProfile) async {
-  //   try {
-  //     await ProfileService().updateProfile(updatedProfile);
-  //     // Refresh profil setelah pembaruan
-  //     getProfile();
-  //   } catch (e) {
-  //     print('Error updating profile: $e');
-  //     // Handle error
-  //   }
-  // }

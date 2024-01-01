@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class ProfilePage extends GetView<ProfileController> {
+  ProfileController controller = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -17,6 +18,7 @@ class ProfilePage extends GetView<ProfileController> {
         statusBarIconBrightness: Brightness.dark,
       ),
     );
+    var itemProfile = controller.profile;
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -76,7 +78,9 @@ class ProfilePage extends GetView<ProfileController> {
                   iconUrl: Icons.account_circle_outlined,
                   title: "Edit Profile",
                   onTap: () {
-                    Get.to(() => ProfileEditPage());
+                    Get.to(ProfileEditPage(
+                      itemProfile: itemProfile,
+                    ));
                   },
                 ),
                 ProfileMenuItem(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ProfileService {
@@ -18,19 +19,21 @@ class ProfileService {
       ),
     );
     Map obj = response.data;
+    print(obj["data"]);
     return obj["data"];
   }
 
   update({
     required int id,
-    required String phone,
+    required String name,
+    required String no_induk,
+    required String email,
     required String born,
     required String address,
-    required String password,
   }) async {
     String? token = box.read("token");
     var response = await Dio().patch(
-      "",
+      "https://myabsen.ferdirns.com/api/profile/$id",
       options: Options(
         headers: {
           "Content-Type": "application/json",
@@ -38,13 +41,15 @@ class ProfileService {
         },
       ),
       data: {
-        "password": password,
-        "phone": phone,
-        "address": address,
+        "name": name,
+        "no_induk": no_induk,
+        "email": email,
         "born": born,
+        "address": address,
       },
     );
     Map obj = response.data;
+    print(obj);
     return obj["data"]["id"];
   }
 }

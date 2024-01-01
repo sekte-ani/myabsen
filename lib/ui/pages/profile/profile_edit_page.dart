@@ -1,22 +1,27 @@
 import 'package:MyAbsen/controller/models/Profile.dart';
 import 'package:MyAbsen/theme.dart';
 import 'package:MyAbsen/ui/widgets/buttons.dart';
+import 'package:MyAbsen/ui/widgets/datepicker.dart';
 import 'package:MyAbsen/ui/widgets/forms.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:MyAbsen/services/profile_service.dart';
 import 'package:MyAbsen/controller/profile_controller.dart';
+import 'package:MyAbsen/ui/widgets/forms.dart';
+import 'package:MyAbsen/ui/widgets/validator.dart';
 
-class ProfileEditPage extends StatelessWidget {
-  final ProfileController profileController = Get.find();
+class ProfileEditPage extends GetView<ProfileController> {
+  ProfileController controller = Get.put(ProfileController());
+
   // const ProfileEditPage({super.key});
+  final Map? itemProfile;
+  ProfileEditPage({
+    Key? key,
+    this.itemProfile,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController();
-    TextEditingController nomorIndukController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController bornController = TextEditingController();
-    TextEditingController addressController = TextEditingController();
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
@@ -64,15 +69,24 @@ class ProfileEditPage extends StatelessWidget {
                     InputField(
                       title: "Nama Lengkap",
                       hintText: "Masukkan nama anda...",
-                      controller: nameController,
+                      validator: Validator.required,
+                      value: controller.name,
+                      onChange: (value) {
+                        controller.name = value;
+                      },
                     ),
                     const SizedBox(
                       height: 16,
                     ),
                     InputField(
-                      title: "NoPeg",
+                      title: "No Pegawai",
                       hintText: "Masukkan nomor pegawai anda...",
-                      controller: nomorIndukController,
+                      // controller: nomorIndukController,
+                      validator: Validator.required,
+                      value: controller.no_induk,
+                      onChange: (value) {
+                        controller.no_induk = value;
+                      },
                     ),
                     const SizedBox(
                       height: 16,
@@ -80,50 +94,55 @@ class ProfileEditPage extends StatelessWidget {
                     InputField(
                       title: "Email",
                       hintText: "Masukkan email anda...",
-                      controller: emailController,
+                      // controller: emailController,
+                      validator: Validator.required,
+                      value: controller.email,
+                      onChange: (value) {
+                        controller.email = value;
+                      },
                     ),
                     const SizedBox(
                       height: 16,
                     ),
-                    InputFieldDate(
-                      title: "Tanggal Lahir",
-                      hintText: "Masukkan tanggal lahir anda...",
-                      controller: bornController,
+                    QDatePicker(
+                      label: "Tanggal Lahir",
+                      validator: Validator.required,
+                      value: controller.born != null
+                          ? DateTime.parse(controller.born!)
+                          : null,
+                      onChanged: (value) {
+                        controller.born = value.toString();
+                      },
                     ),
                     const SizedBox(
                       height: 16,
                     ),
                     InputFieldBox(
                       title: "Alamat",
-                      hintText: "Masukkan alamat anda...",
-                      controller: addressController,
+                      hintText: "Masukkan alamat rumah anda...",
+                      validator: Validator.required,
+                      value: controller.address,
+                      onChange: (value) {
+                        controller.address = value;
+                      },
                     ),
                     const SizedBox(
                       height: 40,
                     ),
                     PrimaryButton(
-                      title: 'Perbarui Profile',
-                      onPressed: () {
-                        // Mengambil nilai dari input fields
-                        String name = nameController.text;
-                        String nomorInduk = nomorIndukController.text;
-                        String email = emailController.text;
-                        String born = bornController.text;
-                        String address = addressController.text;
-
-                        // Membuat objek Profile dari nilai-nilai yang diambil
-                        Profile updatedProfile = Profile(
-                          id: profileController.profile['id'] ?? 0,
-                          name: name,
-                          nomorInduk: nomorInduk,
-                          email: email,
-                          born: born,
-                          address: address,
-                        );
-
-                        // Memanggil fungsi onUpdateProfile dari controller untuk memperbarui profil
-                        profileController.onUpdateProfile(updatedProfile);
-                      },
+                      title: "Perbarui Profile",
+                      onPressed: controller.isUpdatingProfile.value
+                          ? null
+                          : () {
+                              controller.updateProfile(
+                                name: controller.name!,
+                                no_induk: controller.no_induk!,
+                                email: controller.email!,
+                                born: controller.born!,
+                                address: controller.address!,
+                                // password: controller.password!,
+                              );
+                            },
                     ),
                     const SizedBox(
                       height: 40,
