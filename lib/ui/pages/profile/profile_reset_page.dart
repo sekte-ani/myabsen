@@ -21,7 +21,9 @@ class ProfileResetPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: bgColor,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: whiteColor),
         title: Text(
           'Reset Password',
           style: TextStyle(
@@ -48,69 +50,84 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Stack(
       children: [
-        const SizedBox(height: 15),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          height: 100,
           decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(27)),
+            color: Colors.green,
           ),
-          child: Form(
-            key: controller.formKey,
-            child: Column(
-              children: [
-                const SizedBox(height: 24),
-                InputFieldPassword(
-                  title: "Password Lama",
-                  hintText: "Masukkan password lama anda..",
-                  controller: oldPasswordController,
-                  validator: Validator.required,
-                  onChange: (value) {
-                    controller.current_password = value;
-                  },
-                ),
-                const SizedBox(height: 16),
-                InputFieldPassword(
-                  title: "Password Baru",
-                  hintText: "Masukkan password baru anda..",
-                  controller: newPasswordController,
-                  validator: Validator.password,
-                  onChange: (value) {
-                    controller.password = value;
-                  },
-                ),
-                const SizedBox(height: 16),
-                InputFieldPassword(
-                  title: "Konfirmasi Password",
-                  hintText: "Masukkan ulang password baru..",
-                  controller: confirmPasswordController,
-                  validator: Validator.required,
-                  onChange: (value) {
-                    controller.password_confirmation = value;
-                  },
-                ),
-                const SizedBox(height: 32),
-                PrimaryButton(
-                  title: "Perbarui Profile",
-                  onPressed: controller.isUpdatingPassword.value
-                      ? null
-                      : () {
-                          // print("name : ${controller.name}");
-                          print("1password: ${controller.password}");
-                          print(
-                              "1password_confirmation: ${controller.password_confirmation}");
-                          print(
-                              "1current_password: ${controller.current_password}");
+        ),
+        ListView(
+          children: [
+            const SizedBox(height: 25),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+              ),
+              decoration: BoxDecoration(
+                color: bgColor,
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(27)),
+              ),
+              child: Form(
+                key: controller.formKey,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 50),
+                    InputFieldPassword(
+                      title: "Password Lama",
+                      hintText: "Masukkan password lama anda..",
+                      controller: oldPasswordController,
+                      validator: Validator.required,
+                      onChange: (value) {
+                        controller.current_password = value;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    InputFieldPassword(
+                      title: "Password Baru",
+                      hintText: "Masukkan password baru anda..",
+                      controller: newPasswordController,
+                      validator: Validator.password,
+                      onChange: (value) {
+                        controller.password = value;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    InputFieldPassword(
+                      title: "Konfirmasi Password",
+                      hintText: "Masukkan ulang password baru..",
+                      controller: confirmPasswordController,
+                      validator: Validator.required,
+                      onChange: (value) {
+                        controller.password_confirmation = value;
+                      },
+                    ),
+                    const SizedBox(height: 32),
+                    PrimaryButton(
+                      title: "Perbarui Profile",
+                      onPressed: controller.isUpdatingPassword.value
+                          ? null
+                          : () {
+                              // print("name : ${controller.name}");
+                              print("1password: ${controller.password}");
+                              print(
+                                  "1password_confirmation: ${controller.password_confirmation}");
+                              print(
+                                  "1current_password: ${controller.current_password}");
 
-                          controller.updatePassword();
-                        },
+                              controller.updatePassword();
+                            },
+                    ),
+                    const SizedBox(height: 50),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ],
     );
