@@ -15,31 +15,41 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getProfile(); // Mengubah nama fungsi menjadi getProfile dari getProfiles
+    getProfiles(); // Mengubah nama fungsi menjadi getProfile dari getProfiles
   }
 
   RxMap profile = {}.obs;
 
-  void getProfile() async {
+  Future<void> getProfiles() async {
     try {
-      Profile fetchedProfile = await ProfileService()
-          .getProfile(); // Panggil fungsi getProfile dari ProfileService
-      profile.value = fetchedProfile.toJson();
+      profile.value = await ProfileService().get();
       update();
     } catch (e) {
-      print('Error fetching profile: $e');
+      print('Error fetching profiles: $e');
       // Handle error as needed
     }
   }
 
-  void onUpdateProfile(Profile updatedProfile) async {
-    try {
-      await ProfileService().updateProfile(updatedProfile);
-      // Refresh profil setelah pembaruan
-      getProfile();
-    } catch (e) {
-      print('Error updating profile: $e');
-      // Handle error
-    }
-  }
+  // void getProfile() async {
+  //   try {
+  //     Profile fetchedProfile = await ProfileService()
+  //         .getProfile(); // Panggil fungsi getProfile dari ProfileService
+  //     profile.value = fetchedProfile.toJson();
+  //     update();
+  //   } catch (e) {
+  //     print('Error fetching profile: $e');
+  //     // Handle error as needed
+  //   }
+  // }
+
+  // void onUpdateProfile(Profile updatedProfile) async {
+  //   try {
+  //     await ProfileService().updateProfile(updatedProfile);
+  //     // Refresh profil setelah pembaruan
+  //     getProfile();
+  //   } catch (e) {
+  //     print('Error updating profile: $e');
+  //     // Handle error
+  //   }
+  // }
 }

@@ -4,6 +4,7 @@ import 'package:MyAbsen/controller/profile_controller.dart';
 import 'package:MyAbsen/controller/shared/dateformat_controller.dart';
 import 'package:MyAbsen/controller/shared/latlong_controller.dart';
 import 'package:MyAbsen/theme.dart';
+import 'package:MyAbsen/ui/pages/dashboard_page.dart';
 import 'package:MyAbsen/ui/widgets/buttons.dart';
 import 'package:MyAbsen/ui/widgets/forms.dart';
 import 'package:flutter/material.dart';
@@ -242,19 +243,14 @@ Widget buildDataAbsen() {
       ),
       PrimaryButton(
         title: "Absen Masuk",
-        onPressed: () {
+        onPressed: () async {
           controller.tanggal_masuk =
               DateFormat('yyyy-MM-dd').format(currentDate);
           controller.jam_masuk = DateFormat('HH:mm:ss').format(currentTime);
           controller.lat_in = _latLongController.latitude.value;
           controller.long_in = _latLongController.longitude.value;
 
-          print("tanggal masuk ${controller.tanggal_masuk}");
-          print("jam masuk ${controller.jam_masuk}");
-          print("lat masuk ${controller.lat_in}");
-          print("long masuk ${controller.long_in}");
-          controller.doAbsenMasuk();
-          // Get.back();
+          await controller.doAbsenMasuk();
         },
       ),
       SizedBox(height: 20),

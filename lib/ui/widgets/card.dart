@@ -1,3 +1,4 @@
+import 'package:MyAbsen/controller/absensi_controller.dart';
 import 'package:MyAbsen/controller/history_controller.dart';
 import 'package:MyAbsen/theme.dart';
 import 'package:MyAbsen/ui/pages/absensi/absensi_keluar_page.dart';
@@ -145,10 +146,14 @@ class AbsensiCard extends StatelessWidget {
 }
 
 class TotalAbsensiCard extends StatelessWidget {
-  const TotalAbsensiCard({super.key});
+  // const TotalAbsensiCard({super.key});
+
+  AbsensiController totalController = Get.put(AbsensiController());
 
   @override
   Widget build(BuildContext context) {
+    var dataHadir = totalController.totalHadir;
+    var dataCuti = totalController.totalCuti;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,13 +188,13 @@ class TotalAbsensiCard extends StatelessWidget {
                             fontSize: 16,
                           ),
                         ),
-                        Text(
-                          "0 Hari",
-                          style: font_regular.copyWith(
-                            fontSize: 14,
-                            color: darkGreyColor,
-                          ),
-                        ),
+                        Obx(() => Text(
+                              "${dataHadir.value} Hari",
+                              style: font_regular.copyWith(
+                                fontSize: 14,
+                                color: darkGreyColor,
+                              ),
+                            )),
                       ],
                     )
                   ],
@@ -227,13 +232,13 @@ class TotalAbsensiCard extends StatelessWidget {
                             fontSize: 16,
                           ),
                         ),
-                        Text(
-                          "0 Hari",
-                          style: font_regular.copyWith(
-                            fontSize: 14,
-                            color: darkGreyColor,
-                          ),
-                        ),
+                        Obx(() => Text(
+                              "${dataCuti.value} Hari",
+                              style: font_regular.copyWith(
+                                fontSize: 14,
+                                color: darkGreyColor,
+                              ),
+                            )),
                       ],
                     )
                   ],

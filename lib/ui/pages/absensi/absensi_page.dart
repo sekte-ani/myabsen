@@ -20,19 +20,7 @@ import 'package:MyAbsen/ui/pages/history/history_card.dart';
 class AbsensiPage extends GetView<AbsensiController> {
   AbsensiController absensiController = Get.put(AbsensiController());
   ProfileController profileController = Get.put(ProfileController());
-  HistoryController historyController = Get.put(HistoryController());
   DateFormatController dateFormatController = Get.put(DateFormatController());
-
-  // Future<void> _launchURL(String url) async {
-  //   final Uri uri = Uri.parse(url);
-  //   if (!await launchUrl(
-  //     uri,
-  //     mode: LaunchMode.externalApplication,
-  //   )) {
-  //     throw "can not launch url";
-  //   }
-  //   ;
-  // }
 
   // Future<void> _onRefresh() async {
   //   await absensiController.getAttendenceIn();
@@ -46,6 +34,7 @@ class AbsensiPage extends GetView<AbsensiController> {
         statusBarIconBrightness: Brightness.dark,
       ),
     );
+    HistoryController historyController = Get.put(HistoryController());
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -95,7 +84,7 @@ class AbsensiPage extends GetView<AbsensiController> {
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: min(5, historyController.history.length),
                     itemBuilder: (context, index) {
-                      final historyData = historyController.history[index];
+                      var historyData = historyController.history[index];
                       final tanggalMasuk = historyData['tanggal_masuk'] != null
                           ? dateFormatController.formatDate(
                               DateTime.parse(historyData['tanggal_masuk']),

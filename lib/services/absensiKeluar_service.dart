@@ -5,10 +5,10 @@ class AbsenKeluarService {
   final box = GetStorage();
 
   Future create({
-    required String tanggalKeluar,
-    required String jamKeluar,
-    required String latOut,
-    required String longOut,
+    required String tanggal_keluar,
+    required String jam_keluar,
+    required String lat_out,
+    required String long_out,
   }) async {
     try {
       String? token = box.read("token");
@@ -17,15 +17,16 @@ class AbsenKeluarService {
         "https://myabsen.ferdirns.com/api/attendance-out",
         options: Options(
           headers: {
+            "Accept": "application/json",
             "Content-Type": "application/json",
             "Authorization": "Bearer $token",
           },
         ),
         data: {
-          "tangga;_keluar": tanggalKeluar,
-          "jam_masuk": jamKeluar,
-          "lat_in": latOut,
-          "long_In": longOut,
+          "tanggal_keluar": tanggal_keluar,
+          "jam_keluar": jam_keluar,
+          "lat_out": lat_out,
+          "long_out": long_out,
         },
       );
       Map obj = response.data;

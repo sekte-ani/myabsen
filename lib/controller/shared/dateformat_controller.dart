@@ -1,4 +1,5 @@
 // date_format_controller.dart
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +12,8 @@ class DateFormatController extends GetxController {
 
   String formatDate(DateTime date) {
     initializeDateFormatting();
-    return formattedDate.value = DateFormat('d MMMM yyyy', 'id_ID').format(date);
+    return formattedDate.value =
+        DateFormat('d MMMM yyyy', 'id_ID').format(date);
   }
 
   void formatHari(DateTime date) {
@@ -20,7 +22,11 @@ class DateFormatController extends GetxController {
   }
 
   String formatJam(DateTime time) {
-    return jamSekarang.value = DateFormat('H:mm').format(time);
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      jamSekarang.value = DateFormat('H:mm').format(time);
+    });
+    return DateFormat('H:mm')
+        .format(time); // Return a default value or whatever fits your logic
   }
 
   void greetings(DateTime time) {
@@ -34,5 +40,15 @@ class DateFormatController extends GetxController {
     } else {
       greet.value = "Selamat Malam,";
     }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    // Use ever to react to changes in jamSekarang
+    ever(jamSekarang, (value) {
+      // You can perform additional actions here if needed
+    });
   }
 }
