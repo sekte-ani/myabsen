@@ -55,8 +55,8 @@ class CutiController extends GetxController {
         'Success',
         'Pengajuan cuti berhasil terkirim',
         snackPosition: SnackPosition.TOP,
-        colorText: whiteColor,
-        backgroundColor: green2Color,
+        colorText: green2Color,
+        backgroundColor: whiteColor,
       );
 
       alasanController.clear();

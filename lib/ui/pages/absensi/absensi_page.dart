@@ -22,9 +22,10 @@ class AbsensiPage extends GetView<AbsensiController> {
   ProfileController profileController = Get.put(ProfileController());
   DateFormatController dateFormatController = Get.put(DateFormatController());
 
-  // Future<void> _onRefresh() async {
-  //   await absensiController.getAttendenceIn();
-  // }
+  Future<void> _onRefresh() async {
+    await absensiController.doTotalAbsensi();
+    await absensiController.doStatusCheck();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,91 +40,95 @@ class AbsensiPage extends GetView<AbsensiController> {
     return Scaffold(
       backgroundColor: bgColor,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildHeader(),
-                const SizedBox(
-                  height: 40,
-                ),
-                AbsensiCard(),
-                const SizedBox(
-                  height: 40,
-                ),
-                Text(
-                  "Total Absensi",
-                  style: font_semiBold.copyWith(
-                    fontSize: 18,
+        child: RefreshIndicator(
+          onRefresh: _onRefresh,
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildHeader(),
+                  const SizedBox(
+                    height: 40,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TotalAbsensiCard(),
-                const SizedBox(
-                  height: 40,
-                ),
-                Text(
-                  "Absensi Terakhir",
-                  style: font_semiBold.copyWith(
-                    fontSize: 18,
+                  AbsensiCard(),
+                  const SizedBox(
+                    height: 40,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                // Display only 5 HistoryCard
-                Obx(
-                  () => ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: min(5, historyController.history.length),
-                    itemBuilder: (context, index) {
-                      var historyData = historyController.history[index];
-                      final tanggalMasuk = historyData['tanggal_masuk'] != null
-                          ? dateFormatController.formatDate(
-                              DateTime.parse(historyData['tanggal_masuk']),
-                            )
-                          : 'Data tidak tersedia';
-
-                      final tanggalKeluar =
-                          historyData['tanggal_keluar'] != null
-                              ? dateFormatController.formatDate(
-                                  DateTime.parse(historyData['tanggal_keluar']),
-                                )
-                              : 'Data tidak tersedia';
-
-                      final jamMasuk = historyData['jam_masuk'] != null
-                          ? dateFormatController.formatJam(DateTime.parse(
-                              "2023-01-01 ${historyData['jam_masuk']}"))
-                          : 'Data tidak tersedia';
-
-                      final jamKeluar = historyData['jam_keluar'] != null
-                          ? dateFormatController.formatJam(DateTime.parse(
-                              "2023-01-01 ${historyData['jam_keluar']}"))
-                          : 'Data tidak tersedia';
-
-                      return HistoryCard(
-                        tanggal: historyData['status'] == "0"
-                            ? tanggalMasuk
-                            : tanggalKeluar,
-                        status: historyData['status'] == "1"
-                            ? "Absen Selesai"
-                            : "Belum selesai",
-                        jamMasuk: jamMasuk,
-                        jamKeluar: historyData['jam_keluar'] == null
-                            ? "Belum absen"
-                            : jamKeluar,
-                      );
-                    },
+                  Text(
+                    "Total Absensi",
+                    style: font_semiBold.copyWith(
+                      fontSize: 18,
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TotalAbsensiCard(),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Text(
+                    "Absensi Terakhir",
+                    style: font_semiBold.copyWith(
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  // Display only 5 HistoryCard
+                  Obx(
+                    () => ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: min(5, historyController.history.length),
+                      itemBuilder: (context, index) {
+                        var historyData = historyController.history[index];
+                        final tanggalMasuk = historyData['tanggal_masuk'] !=
+                                null
+                            ? dateFormatController.formatDate(
+                                DateTime.parse(historyData['tanggal_masuk']),
+                              )
+                            : 'Data tidak tersedia';
+
+                        final tanggalKeluar = historyData['tanggal_keluar'] !=
+                                null
+                            ? dateFormatController.formatDate(
+                                DateTime.parse(historyData['tanggal_keluar']),
+                              )
+                            : 'Data tidak tersedia';
+
+                        final jamMasuk = historyData['jam_masuk'] != null
+                            ? dateFormatController.formatJam(DateTime.parse(
+                                "2023-01-01 ${historyData['jam_masuk']}"))
+                            : 'Data tidak tersedia';
+
+                        final jamKeluar = historyData['jam_keluar'] != null
+                            ? dateFormatController.formatJam(DateTime.parse(
+                                "2023-01-01 ${historyData['jam_keluar']}"))
+                            : 'Data tidak tersedia';
+
+                        return HistoryCard(
+                          tanggal: historyData['status'] == "0"
+                              ? tanggalMasuk
+                              : tanggalKeluar,
+                          status: historyData['status'] == "1"
+                              ? "Absen Selesai"
+                              : "Belum selesai",
+                          jamMasuk: jamMasuk,
+                          jamKeluar: historyData['jam_keluar'] == null
+                              ? "Belum absen"
+                              : jamKeluar,
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
