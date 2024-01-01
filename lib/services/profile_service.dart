@@ -20,6 +20,7 @@ class ProfileService {
     Map obj = response.data;
     return obj["data"];
   }
+  
 }
 // import 'package:dio/dio.dart';
 // import 'package:MyAbsen/controller/models/Profile.dart';
