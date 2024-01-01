@@ -41,6 +41,20 @@ class AbsensiController extends GetxController {
     print('onResume called');
   }
 
+  RxBool statusCheckAbs = false.obs;
+
+  Future<void> doStatusCheck() async {
+    try {
+      statusCheckAbs.value = await AbsensiService().doCheckAbsensi();
+      print("Status ABSEN SEKARANG CUYYY ${statusCheckAbs.value}");
+      update();
+    } on Exception catch (err) {
+      print(err);
+    }
+  }
+
+  // Widget Total Absensi
+
   var totalHadir = 0.obs;
   var totalCuti = 0.obs;
 
@@ -54,6 +68,8 @@ class AbsensiController extends GetxController {
       print(err);
     }
   }
+
+  // Page Absen Masuk
 
   String? tanggal_masuk;
   String? jam_masuk;
@@ -87,6 +103,9 @@ class AbsensiController extends GetxController {
       );
 
       historyController.getHistory();
+      doTotalAbsensi();
+      doStatusCheck();
+
       update();
 
       Get.off(() => DashboardPage());
@@ -125,6 +144,9 @@ class AbsensiController extends GetxController {
         backgroundColor: green2Color,
       );
       historyController.getHistory();
+      doTotalAbsensi();
+      doStatusCheck();
+
       update();
 
       Get.off(() => DashboardPage());
