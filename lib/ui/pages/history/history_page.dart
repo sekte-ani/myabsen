@@ -44,13 +44,23 @@ class HistoryPage extends GetView<HistoryController> {
                     ? dateFormatController.formatDate(
                         DateTime.parse(historyData['tanggal_masuk']),
                       )
-                    : ''; // Provide a default value or handle the case where tanggal_masuk is null
+                    : 'Data tidak tersedia';
 
                 final tanggalKeluar = historyData['tanggal_keluar'] != null
                     ? dateFormatController.formatDate(
                         DateTime.parse(historyData['tanggal_keluar']),
                       )
-                    : ''; // Provide a default value or handle the case where tanggal_keluar is null
+                    : 'Data tidak tersedia';
+
+                final jamMasuk = historyData['jam_masuk'] != null
+                    ? dateFormatController.formatJam(DateTime.parse(
+                        "2023-01-01 ${historyData['jam_masuk']}"))
+                    : 'Data tidak tersedia';
+
+                final jamKeluar = historyData['jam_keluar'] != null
+                    ? dateFormatController.formatJam(DateTime.parse(
+                        "2023-01-01 ${historyData['jam_keluar']}"))
+                    : 'Data tidak tersedia';
 
                 return HistoryCard(
                   tanggal: historyData['status'] == "0"
@@ -59,11 +69,10 @@ class HistoryPage extends GetView<HistoryController> {
                   status: historyData['status'] == "1"
                       ? "Absen Selesai"
                       : "Belum selesai",
-                  jamMasuk: historyData['jam_masuk'],
+                  jamMasuk: jamMasuk,
                   jamKeluar: historyData['jam_keluar'] == null
                       ? "Belum absen"
-                      : historyData[
-                          'jam_masuk'], // Ubah ini sesuai dengan atribut data yang ingin Anda tampilkan
+                      : jamKeluar, // Ubah ini sesuai dengan atribut data yang ingin Anda tampilkan
                 );
               },
             );

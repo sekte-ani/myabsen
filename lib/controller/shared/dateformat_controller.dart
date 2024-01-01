@@ -19,8 +19,8 @@ class DateFormatController extends GetxController {
     hariIni.value = DateFormat('EEEE', 'id_ID').format(date);
   }
 
-  void formatJam(DateTime time) {
-    jamSekarang.value = DateFormat('H:mm').format(time);
+  String formatJam(DateTime time) {
+    return jamSekarang.value = DateFormat('H:mm').format(time);
   }
 
   void greetings(DateTime time) {
