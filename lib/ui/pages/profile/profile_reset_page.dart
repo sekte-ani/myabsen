@@ -90,7 +90,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                     ? null
                     : () {
                         // print("name : ${controller.name}");
-                        print("phone : ${controller.password}");
+                        print("password: ${controller.password}");
 
                         controller.updatePassword(
                           password: controller.password!,
