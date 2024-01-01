@@ -18,20 +18,20 @@ class AbsensiPage extends GetView<AbsensiController> {
   AbsensiController absensiController = Get.put(AbsensiController());
   ProfileController profileController = Get.put(ProfileController());
 
-  Future<void> _launchURL(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (!await launchUrl(
-      uri,
-      mode: LaunchMode.externalApplication,
-    )) {
-      throw "can not launch url";
-    }
-    ;
-  }
+  // Future<void> _launchURL(String url) async {
+  //   final Uri uri = Uri.parse(url);
+  //   if (!await launchUrl(
+  //     uri,
+  //     mode: LaunchMode.externalApplication,
+  //   )) {
+  //     throw "can not launch url";
+  //   }
+  //   ;
+  // }
 
-  Future<void> _onRefresh() async {
-    await absensiController.getAttendenceIn();
-  }
+  // Future<void> _onRefresh() async {
+  //   await absensiController.getAttendenceIn();
+  // }
 
   @override
   Widget build(BuildContext context) {

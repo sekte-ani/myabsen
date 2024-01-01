@@ -9,6 +9,7 @@ import 'package:MyAbsen/ui/widgets/forms.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:MyAbsen/controller/absensi_keluar_controller.dart';
 
 class AbsensiKeluarPage extends GetView<AbsensiController> {
   ProfileController profileController = Get.put(ProfileController());
@@ -138,9 +139,17 @@ Widget buildHeader() {
 }
 
 Widget buildDataAbsen() {
+  final AbsensiKeluarController controller = Get.put(AbsensiKeluarController());
   LatLongController _latLongController = Get.put(LatLongController());
+  final RxBool submitted = false.obs;
+
   final DateFormatController dateFormatController =
       Get.put(DateFormatController());
+  void submitQuestion() {
+    // Add logic to send the question or message
+    submitted.value = true;
+  }
+
   DateTime currentDate = DateTime.now();
   DateTime currentTime = DateTime.now();
   dateFormatController.formatDate(currentDate);
@@ -228,9 +237,10 @@ Widget buildDataAbsen() {
         height: 40,
       ),
       PrimaryButton(
-        title: 'Absen Pulang',
+        title: "Absen Pulang",
         onPressed: () {
-          Get.back();
+          controller.doKirim();
+          // Get.back();
         },
       ),
     ],
