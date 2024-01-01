@@ -1,14 +1,22 @@
+import 'package:MyAbsen/controller/models/Profile.dart';
 import 'package:MyAbsen/theme.dart';
 import 'package:MyAbsen/ui/widgets/buttons.dart';
 import 'package:MyAbsen/ui/widgets/forms.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:MyAbsen/controller/profile_controller.dart';
 
 class ProfileEditPage extends StatelessWidget {
-  const ProfileEditPage({super.key});
+  final ProfileController profileController = Get.find();
+  // const ProfileEditPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController nomorIndukController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController bornController = TextEditingController();
+    TextEditingController addressController = TextEditingController();
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
@@ -56,6 +64,7 @@ class ProfileEditPage extends StatelessWidget {
                     InputField(
                       title: "Nama Lengkap",
                       hintText: "Masukkan nama anda...",
+                      controller: nameController,
                     ),
                     const SizedBox(
                       height: 16,
@@ -63,6 +72,7 @@ class ProfileEditPage extends StatelessWidget {
                     InputField(
                       title: "NoPeg",
                       hintText: "Masukkan nomor pegawai anda...",
+                      controller: nomorIndukController,
                     ),
                     const SizedBox(
                       height: 16,
@@ -70,6 +80,7 @@ class ProfileEditPage extends StatelessWidget {
                     InputField(
                       title: "Email",
                       hintText: "Masukkan email anda...",
+                      controller: emailController,
                     ),
                     const SizedBox(
                       height: 16,
@@ -77,6 +88,7 @@ class ProfileEditPage extends StatelessWidget {
                     InputFieldDate(
                       title: "Tanggal Lahir",
                       hintText: "Masukkan tanggal lahir anda...",
+                      controller: bornController,
                     ),
                     const SizedBox(
                       height: 16,
@@ -84,6 +96,7 @@ class ProfileEditPage extends StatelessWidget {
                     InputFieldBox(
                       title: "Alamat",
                       hintText: "Masukkan alamat anda...",
+                      controller: addressController,
                     ),
                     const SizedBox(
                       height: 40,
@@ -91,7 +104,25 @@ class ProfileEditPage extends StatelessWidget {
                     PrimaryButton(
                       title: 'Perbarui Profile',
                       onPressed: () {
-                        Get.back();
+                        // Mengambil nilai dari input fields
+                        String name = nameController.text;
+                        String nomorInduk = nomorIndukController.text;
+                        String email = emailController.text;
+                        String born = bornController.text;
+                        String address = addressController.text;
+
+                        // Membuat objek Profile dari nilai-nilai yang diambil
+                        Profile updatedProfile = Profile(
+                          id: profileController.profile['id'] ?? 0,
+                          name: name,
+                          nomorInduk: nomorInduk,
+                          email: email,
+                          born: born,
+                          address: address,
+                        );
+
+                        // Memanggil fungsi onUpdateProfile dari controller untuk memperbarui profil
+                        profileController.onUpdateProfile(updatedProfile);
                       },
                     ),
                     const SizedBox(
