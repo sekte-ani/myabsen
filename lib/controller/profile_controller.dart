@@ -3,6 +3,7 @@ import 'package:MyAbsen/controller/models/Profile.dart'; // Pastikan impor kelas
 import 'package:MyAbsen/ui/pages/login_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileController extends GetxController {
   final box = GetStorage();
@@ -15,7 +16,7 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getProfiles(); // Mengubah nama fungsi menjadi getProfile dari getProfiles
+    getProfiles();
   }
 
   RxMap profile = {}.obs;
@@ -30,6 +31,39 @@ class ProfileController extends GetxController {
     }
   }
 
+  Future<void> onUpdateProfile(Profile updatedProfile) async {
+    String apiUrl =
+        'https://myabsen.ferdirns.com/api/profile/${updatedProfile.id}';
+
+    try {
+      print('Updated Profile ID: ${updatedProfile.id}');
+
+      var response = await http.put(
+        Uri.parse(apiUrl),
+        body: {
+          'name': updatedProfile.name,
+          'nomor_induk': updatedProfile.nomorInduk,
+          'email': updatedProfile.email,
+          'born': updatedProfile.born,
+          'address': updatedProfile.address,
+        },
+        // tambahkan headers jika diperlukan
+      );
+
+      if (response.statusCode == 200) {
+        // Handle jika permintaan sukses
+        print('Profil berhasil diperbarui');
+      } else {
+        // Handle jika permintaan gagal
+        print('Gagal memperbarui profil');
+        print('Status Code: ${response.statusCode}');
+        print('Error Message: ${response.body}');
+      }
+    } catch (e) {
+      print('Terjadi kesalahan: $e');
+    }
+  }
+}
   // void getProfile() async {
   //   try {
   //     Profile fetchedProfile = await ProfileService()
@@ -52,4 +86,3 @@ class ProfileController extends GetxController {
   //     // Handle error
   //   }
   // }
-}

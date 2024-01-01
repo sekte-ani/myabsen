@@ -122,7 +122,7 @@ class ProfileEditPage extends StatelessWidget {
                         );
 
                         // Memanggil fungsi onUpdateProfile dari controller untuk memperbarui profil
-                        // profileController.onUpdateProfile(updatedProfile);
+                        profileController.onUpdateProfile(updatedProfile);
                       },
                     ),
                     const SizedBox(
