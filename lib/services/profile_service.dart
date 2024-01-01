@@ -32,8 +32,8 @@ class ProfileService {
     required String address,
   }) async {
     String? token = box.read("token");
-    var response = await Dio().patch(
-      "https://myabsen.ferdirns.com/api/profile/$id",
+    var response = await Dio().post(
+      "https://myabsen.ferdirns.com/api/profile",
       options: Options(
         headers: {
           "Content-Type": "application/json",

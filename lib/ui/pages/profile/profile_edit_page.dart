@@ -142,6 +142,7 @@ class ProfileEditPage extends GetView<ProfileController> {
                                 address: controller.address!,
                                 // password: controller.password!,
                               );
+                              print("name : ${controller.name}");
                             },
                     ),
                     const SizedBox(
