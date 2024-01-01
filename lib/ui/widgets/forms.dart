@@ -284,6 +284,7 @@ class InputFieldBox extends StatelessWidget {
           maxLines: 5,
           keyboardType: TextInputType.multiline,
           obscureText: obscureText,
+          initialValue: value,
           controller: controller,
           validator: validator,
           inputFormatters: inputFormatters,
