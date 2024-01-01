@@ -9,6 +9,7 @@ import 'package:MyAbsen/ui/widgets/forms.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:MyAbsen/controller/absensi_controller.dart';
+import 'package:intl/intl.dart';
 
 class AbsensiMasukPage extends GetView<AbsensiController> {
   // final AbsensiController controller = Get.put(AbsensiController());
@@ -242,7 +243,17 @@ Widget buildDataAbsen() {
       PrimaryButton(
         title: "Absen Masuk",
         onPressed: () {
-          controller.doKirim();
+          controller.tanggal_masuk =
+              DateFormat('yyyy-MM-dd').format(currentDate);
+          controller.jam_masuk = DateFormat('HH:mm:ss').format(currentTime);
+          controller.lat_in = _latLongController.latitude.value;
+          controller.long_in = _latLongController.longitude.value;
+
+          print("tanggal masuk ${controller.tanggal_masuk}");
+          print("jam masuk ${controller.jam_masuk}");
+          print("lat masuk ${controller.lat_in}");
+          print("long masuk ${controller.long_in}");
+          controller.doAbsenMasuk();
           // Get.back();
         },
       ),

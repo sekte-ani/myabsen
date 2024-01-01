@@ -20,10 +20,9 @@ class AbsensiController extends GetxController {
   HistoryController historyController = Get.put(HistoryController());
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    // Load the profile data when the widget is initialized
-    historyController.getHistory();
+    await historyController.getHistory();
     update();
   }
 
@@ -32,44 +31,51 @@ class AbsensiController extends GetxController {
   String? lat_in;
   String? long_in;
 
-  RxString selected = ''.obs;
   final DateFormatController dateFormatController =
       Get.put(DateFormatController());
 
-  doKirim() async {
-    Get.focusScope!.unfocus();
-    bool isValid = formKey.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
-    bool isSuccess = await AbsenMasukService().create(
-      tanggalMasuk: tanggal_masuk!,
-      jamMasuk: jam_masuk!,
-      latIn: lat_in!,
-      longIn: long_in!,
-    );
+  doAbsenMasuk() async {
+    // Get.focusScope!.unfocus();
+    // bool isValid = formKey.currentState!.validate();
+    // if (!isValid) {
+    //   return;
+    // }
 
-    if (!isSuccess) {
-      Get.snackbar(
-        'Error',
-        'Form validation failed',
-        snackPosition: SnackPosition.TOP,
-        colorText: whiteColor,
-        backgroundColor: redColor,
+    try {
+      await AbsenMasukService().create(
+        tanggalMasuk: tanggal_masuk!,
+        jamMasuk: jam_masuk!,
+        latIn: lat_in!,
+        longIn: long_in!,
       );
-      return;
-    } else {
-      Get.snackbar(
-        'Success',
-        'Forum berhasil terkirim',
-        snackPosition: SnackPosition.TOP,
-        colorText: whiteColor,
-        backgroundColor: green2Color,
-      );
-
-      selected.value = '';
-      messageController.clear();
-      return;
+    } on Exception catch (err) {
+      print(err);
     }
+
+    print("tanggal masuk 1 ${tanggal_masuk}");
+    print("jam masuk ${jam_masuk}");
+    print("lat masuk ${lat_in}");
+    print("long masuk ${long_in}");
+
+    // if (!isSuccess) {
+    //   // Get.snackbar(
+    //   //   'Error',
+    //   //   'Form validation failed',
+    //   //   snackPosition: SnackPosition.TOP,
+    //   //   colorText: whiteColor,
+    //   //   backgroundColor: redColor,
+    //   // );
+    //   print("data tidak terkirim");
+    //   return;
+    // } else {
+    //   Get.snackbar(
+    //     'Success',
+    //     'Forum berhasil terkirim',
+    //     snackPosition: SnackPosition.TOP,
+    //     colorText: whiteColor,
+    //     backgroundColor: green2Color,
+    //   );
+    //   return;
+    // }
   }
 }
