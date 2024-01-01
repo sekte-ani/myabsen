@@ -1,5 +1,7 @@
+import 'package:MyAbsen/services/auth_service.dart';
 import 'package:MyAbsen/services/profile_service.dart';
 import 'package:MyAbsen/controller/models/Profile.dart'; // Pastikan impor kelas Profile ada di sini
+import 'package:MyAbsen/theme.dart';
 import 'package:MyAbsen/ui/pages/login_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -7,10 +9,29 @@ import 'package:http/http.dart' as http;
 
 class ProfileController extends GetxController {
   final box = GetStorage();
+  final AuthService authService = AuthService();
 
-  void onLogout() {
-    box.erase();
-    Get.offAll(LoginPage());
+  void onLogout() async {
+    // Call the logout method from the AuthService
+    bool logoutSuccess = await authService.logout();
+
+    if (logoutSuccess) {
+      // Clear local storage
+      Get.snackbar(
+        'Success',
+        'Berhasil Logout',
+        snackPosition: SnackPosition.TOP,
+        colorText: whiteColor,
+        backgroundColor: green2Color,
+      );
+      box.erase();
+
+      // Navigate to the login page or perform other actions
+      Get.offAll(LoginPage());
+    } else {
+      // Handle logout failure (display an error message, etc.)
+      print('Logout failed');
+    }
   }
 
   @override

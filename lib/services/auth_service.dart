@@ -30,4 +30,21 @@ class AuthService {
       return false;
     }
   }
+
+  //logout
+  logout() async {
+    String? token = box.read("token");
+    var response = await Dio().get(
+      "https://myabsen.ferdirns.com/api/logout",
+      options: Options(
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      ),
+    );
+
+    Map obj = response.data;
+    return true;
+  }
 }
