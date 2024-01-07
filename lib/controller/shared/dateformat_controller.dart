@@ -12,8 +12,11 @@ class DateFormatController extends GetxController {
 
   String formatDate(DateTime date) {
     initializeDateFormatting();
-    return formattedDate.value =
-        DateFormat('d MMMM yyyy', 'id_ID').format(date);
+    return DateFormat('d MMMM yyyy', 'id_ID').format(date);
+  }
+
+  void updateFormattedDate(DateTime date) {
+    formattedDate.value = formatDate(date);
   }
 
   void formatHari(DateTime date) {

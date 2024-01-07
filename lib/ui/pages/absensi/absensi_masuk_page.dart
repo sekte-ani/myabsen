@@ -159,7 +159,7 @@ Widget buildDataAbsen() {
       Get.put(DateFormatController());
   DateTime currentDate = DateTime.now();
   DateTime currentTime = DateTime.now();
-  dateFormatController.formatDate(currentDate);
+  dateFormatController.updateFormattedDate(currentDate);
   dateFormatController.formatHari(currentDate);
   dateFormatController.formatJam(currentTime);
   return Column(
